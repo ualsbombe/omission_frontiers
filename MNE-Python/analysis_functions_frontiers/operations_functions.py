@@ -224,7 +224,8 @@ def grand_average_evokeds(evoked_data_all, save_dir_averages, lowpass):
         grand_average_path = save_dir_averages + \
             trial_type +  filter_string(lowpass) + \
             '_grand_average-ave.fif'
-        mne.evoked.write_evokeds(grand_average_path, grand_averages[trial_type])
+        mne.evoked.write_evokeds(grand_average_path,
+                                 grand_averages[trial_type])
 
 #==============================================================================
 # MNE SOURCE RECONSTRUCTIONS
