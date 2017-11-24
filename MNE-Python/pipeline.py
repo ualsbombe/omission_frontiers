@@ -18,6 +18,7 @@ home_path = '/home/lau/' ## change this according to needs
 from os.path import join
 from os import chdir
 project_name = 'analyses/omission_frontiers_BIDS-MNE-Python/'
+project_name = 'analyses/bash_test/'
 script_path = home_path + project_name + \
                           'scripts/python/analysis_functions_frontiers/'
 chdir(script_path)
@@ -30,7 +31,7 @@ import plot_functions as plot
 #%%============================================================================
 
 data_path = join(home_path, project_name, 'data/')
-subjects_dir = join(home_path, project_name + '/data/FreeSurfer/')
+subjects_dir = join(home_path, project_name + 'data/FreeSurfer/')
 name = 'oddball_absence'
 save_dir_averages = data_path + 'grand_averages/'
 figures_path = join(home_path, project_name, 'figures/')
@@ -72,7 +73,7 @@ operations_to_apply = dict(
                     ## WITHIN SUBJECT                    
                     
                     ## sensor space operations
-                    filter_raw=1,
+                    filter_raw=0,
                     find_events=0,
                     epoch_raw=0,
                     run_ica=0,
@@ -80,6 +81,8 @@ operations_to_apply = dict(
                     get_evokeds=0,
                     
                     ## source space operations
+                    import_mri=0,
+                    segment_mri=1, # long process (>6 h)
                     create_forward_solution=0,
                     estimate_noise_covariance=0, 
                     create_inverse_operator=0,
@@ -127,7 +130,7 @@ operations_to_apply = dict(
 # PARAMETERS                     
 #%%============================================================================
 ## should files be overwritten
-overwrite = True ## this counts for all operations below that save output
+overwrite = False ## this counts for all operations below that save output
 save_plots = True ## should plots be saved
                     
 ## raw        
@@ -193,6 +196,13 @@ n_permutations = 10000 ## specify as integer
 ## statistics plotting
 p_threshold = 1e-15 ## 1e-15 is the smallest it can get for the way it is coded
 
+## freesurfer and MNE-C commands
+n_jobs_freesurfer = 8 ## change according to amount of processors you have
+                        # available
+source_space_method = ['ico', 5] ## supply a method and a spacing/grade
+                                  # see mne_setup_source_space --help in bash
+                                  # methods 'spacing', 'ico', 'oct'
+
 #==============================================================================
 # PROCESSING LOOP 
 #%%============================================================================            
@@ -200,6 +210,7 @@ for subject in subjects[subjects_to_run[0]:subjects_to_run[1]]:
         
     subject_index = subjects.index(subject)                                             
     save_dir = join(data_path, subject, 'ses-meg', 'meg')
+    dicom_path = join(data_path, subject, 'ses-mri', 'anat')
     bad_channels = bad_channels_dict[subject]
     
     #==========================================================================
@@ -315,6 +326,18 @@ for subject in subjects[subjects_to_run[0]:subjects_to_run[1]]:
     if operations_to_apply['plot_noise_covariance']:
         plot.plot_noise_covariance(name, save_dir, lowpass, subject,
                                    save_plots, figures_path)
+
+    #==========================================================================
+    # IMPORT AND SEGMENT MRI, RUN WATERSHED (BASH COMMANDS;
+    # MAKE SURE SUBJECTS_DIR IS SET CORRECTLY IN BASH)
+    #==========================================================================        
+
+    if operations_to_apply['import_mri']:
+        operations.import_mri(dicom_path, subject, subjects_dir,
+                              n_jobs_freesurfer)
+
+    if operations_to_apply['segment_mri']:
+        operations.segment_mri(subject, subjects_dir, n_jobs_freesurfer)          
                                           
     #==========================================================================
     # SOURCE SPACES

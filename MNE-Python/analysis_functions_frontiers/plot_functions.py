@@ -8,9 +8,6 @@ from os.path import join
 import matplotlib.pyplot as plt
 import mayavi.mlab
 from os import chdir
-script_path = '/home/lau/analyses/omission_frontiers_BIDS-MNE-Python' + \
-        '/scripts/python/analysis_functions_frontiers/'
-chdir(script_path)
 import io_functions as io
 import numpy as np
 from scipy import stats

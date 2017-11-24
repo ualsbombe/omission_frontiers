@@ -5,14 +5,13 @@ Created on Wed April  19 17:30 2017
 """
 import mne
 import numpy as np
-from os.path import join, isfile
+from os.path import join, isfile, isdir
 from scipy import stats
-from os import chdir, makedirs
-script_path = '/home/lau/analyses/omission_frontiers_BIDS-MNE-Python' + \
-        '/scripts/python/analysis_functions_frontiers/'
-chdir(script_path)
+from os import chdir, makedirs, listdir
+import sys
 import io_functions as io
 import pickle
+import subprocess
 
 def filter_string(lowpass):
     
@@ -226,6 +225,153 @@ def grand_average_evokeds(evoked_data_all, save_dir_averages, lowpass):
             '_grand_average-ave.fif'
         mne.evoked.write_evokeds(grand_average_path,
                                  grand_averages[trial_type])
+                                                               
+#==============================================================================
+# BASH OPERATIONS                                 
+#==============================================================================
+        
+## local function used in the bash commands below
+def run_process_and_write_output(command):
+    process = subprocess.Popen(command, stdout=subprocess.PIPE)
+    ## write bash output in python console
+    for c in iter(lambda: process.stdout.read(1), ''):
+             sys.stdout.write(c)
+        
+
+def import_mri(dicom_path, subject, subjects_dir, n_jobs_freesurfer):
+
+    files = listdir(dicom_path)
+    first_file = files[0]
+    ## check if import has already been done
+    if not isdir(join(subjects_dir, subject)):
+        ## run bash command
+        print 'Importing MRI data for subject: ' + subject + \
+              ' into FreeSurfer folder.\nBash output follows below.\n\n'
+              
+        command = ['recon-all',
+                   '-subjid', subject,
+                   '-i', join(dicom_path, first_file),
+                   '-openmp', str(n_jobs_freesurfer)]             
+        
+        run_process_and_write_output(command)
+    else:
+        print('FreeSurfer folder for: ' + subject + ' already exists.' + \
+              ' To import data from the beginning, you would have to ' + \
+              "delete this subject's FreeSurfer folder")
+
+def segment_mri(subject, subjects_dir, n_jobs_freesurfer):
+    
+    print 'Segmenting MRI data for subject: ' + subject + \
+          ' using the Freesurfer "recon-all" pipeline.' + \
+          'Bash output follows below.\n\n'
+          
+    command = ['recon-all',
+               '-subjid', subject,
+               '-all',
+               '-openmp', str(n_jobs_freesurfer)]
+    
+    run_process_and_write_output(command)
+
+def apply_watershed(subject, subjects_dir, overwrite):
+    
+    print 'Running Watershed algorithm for: ' + subject + \
+          ". Output is written to the bem folder" + \
+          "of the subject's FreeSurfer folder" + \
+          'Bash output follows below.\n\n'
+          
+    if overwrite:
+        overwrite_string = '--overwrite'
+    else:
+        overwrite_string = ''
+    ## watershed command      
+    command = ['mne_watershed_bem',
+               '--subject', subject,
+               overwrite_string]          
+
+    run_process_and_write_output(command)
+    ## copy commands
+    surfaces = dict(
+            inner_skull=dict(
+                             origin=subject + '_inner_skull_surface',
+                             destination='inner_skull.surf'),
+            outer_skin=dict(origin=subject + '_outer_skin_surface',
+                            destination='outer_skin.surf'),
+            outer_skull=dict(origin=subject + '_outer_skull_surface',
+                             destination='outer_skull.surf'),
+            brain=dict(origin=subject + '_brain_surface',
+                       destination='brain_surface.surf')
+                    )                           
+    
+    for surface in surfaces:
+        this_surface = surfaces[surface]
+        ## copy files from watershed into bem folder where MNE expects to
+        # find them
+        command = ['cp', '-v',
+                   join(subjects_dir, subject, 'bem', 'watershed',
+                        this_surface['origin']),
+                   join(subjects_dir, subject, 'bem'    ,
+                        this_surface['destination'])
+                   ]
+        run_process_and_write_output(command)
+
+def make_dense_scalp_surfaces(subject, subjects_dir, overwrite):
+    
+    print 'Making dense scalp surfacing easing co-registration for ' + \
+          'subject: ' + subject + \
+          ". Output is written to the bem folder" + \
+          "of the subject's FreeSurfer folder" + \
+          'Bash output follows below.\n\n'
+          
+    if overwrite:
+        overwrite_string = '--overwrite'
+    else:
+        overwrite_string = ''
+
+    command = ['mne_make_scalp_surfaces',
+               '--subject', subject,
+               overwrite_string]
+
+    run_process_and_write_output(command)        
+
+def make_source_space(subject, subjects_dir, source_space_method, overwrite):
+      
+    print 'Making source space for ' + \
+          'subject: ' + subject + \
+          ". Output is written to the bem folder" + \
+          "of the subject's FreeSurfer folder" + \
+          'Bash output follows below.\n\n'
+          
+    if overwrite:
+        overwrite_string = '--overwrite'
+    else:
+        overwrite_string = ''
+        
+    command = ['mne_setup_source_space',
+               '--subject', subject,
+               '--' + source_space_method[0], str(source_space_method[1]),
+               overwrite_string
+               ]
+
+    run_process_and_write_output(command)        
+          
+              
+          
+def make_bem_solutions(subject, subjects_dir):
+       
+    print 'Writing volume conductor for ' + \
+          'subject: ' + subject + \
+          ". Output is written to the bem folder" + \
+          "of the subject's FreeSurfer folder" + \
+          'Bash output follows below.\n\n'
+          
+    command = ['mne_setup_forward_model',
+               '--subject', subject,
+               '--homog',
+               '--surf'
+               '--ico', '4'
+               ]
+             
+    run_process_and_write_output(command)       
 
 #==============================================================================
 # MNE SOURCE RECONSTRUCTIONS
