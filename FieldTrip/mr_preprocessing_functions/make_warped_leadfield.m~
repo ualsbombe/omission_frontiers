@@ -1,0 +1,9 @@
+function [warped_grid] = make_warped_leadfield(cfg, input_variables)
+% This function creates a sourcemodel based on the warping of the individual mri to a template
+%
+% cfg can contain anything that ft_prepare_sourcemodel recognizes
+
+brain_mesh = input_variables{1};
+headmodel = ft_prepare_headmodel(cfg, brain_mesh);
+
+headmodel = {headmodel};
