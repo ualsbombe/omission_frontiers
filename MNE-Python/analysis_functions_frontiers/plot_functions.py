@@ -7,7 +7,6 @@ import mne
 from os.path import join
 import matplotlib.pyplot as plt
 import mayavi.mlab
-from os import chdir
 import io_functions as io
 import numpy as np
 from scipy import stats
@@ -152,10 +151,10 @@ def plot_transformation(name, save_dir, subject, subjects_dir, save_plots,
         info = io.read_info(name, save_dir)
         trans = io.read_transformation(name, save_dir)
         
-        mne.viz.plot_trans(info, trans, subject, subjects_dir,
-                                   head='outer_skin',
-                                   skull=['inner_skull', 'outer_skull'],
-                                   brain=True)
+        mne.viz.plot_alignment(info, trans, subject, subjects_dir,
+                               surfaces=['head-dense', 'inner_skull', 'brain'])#,
+#                               skull=['inner_skull', 'outer_skull'],
+#                               brain=True)
                                    
         mayavi.mlab.view(0, -90)                                   
                            

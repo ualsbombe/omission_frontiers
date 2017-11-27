@@ -18,9 +18,8 @@ home_path = '/home/lau/' ## change this according to needs
 from os.path import join
 from os import chdir
 project_name = 'analyses/omission_frontiers_BIDS-MNE-Python/'
-project_name = 'analyses/bash_test/'
-script_path = home_path + project_name + \
-                          'scripts/python/analysis_functions_frontiers/'
+script_path = join(home_path, project_name, 'scripts', 'python', 
+                   'analysis_functions_frontiers')
 chdir(script_path)
 import operations_functions as operations
 import io_functions as io
@@ -59,7 +58,7 @@ subjects = [
                          'sub-20'
                      ]
 subjects_to_run = (None, None) ## means all subjects
-subjects_to_run = (0, 1) # subject indices to run, if you don't want to run all
+subjects_to_run = (5, 6) # subject indices to run, if you don't want to run all
                               
 #==============================================================================
 # OPERATIONS                     
@@ -82,7 +81,11 @@ operations_to_apply = dict(
                     
                     ## source space operations
                     import_mri=0,
-                    segment_mri=1, # long process (>6 h)
+                    segment_mri=0, # long process (>6 h)
+                    apply_watershed=0,
+                    make_dense_scalp_surfaces=0,
+                    make_source_space=0,
+                    make_bem_solutions=0,
                     create_forward_solution=0,
                     estimate_noise_covariance=0, 
                     create_inverse_operator=0,
@@ -107,7 +110,7 @@ operations_to_apply = dict(
                     plot_butterfly_evokeds=0,
                     
                     ## plotting source space (within subject)
-                    plot_transformation=0,
+                    plot_transformation=1,
                     plot_source_space=0,
                     plot_noise_covariance=0,
                     plot_source_estimates=0,
@@ -197,7 +200,7 @@ n_permutations = 10000 ## specify as integer
 p_threshold = 1e-15 ## 1e-15 is the smallest it can get for the way it is coded
 
 ## freesurfer and MNE-C commands
-n_jobs_freesurfer = 8 ## change according to amount of processors you have
+n_jobs_freesurfer = 32 ## change according to amount of processors you have
                         # available
 source_space_method = ['ico', 5] ## supply a method and a spacing/grade
                                   # see mne_setup_source_space --help in bash
@@ -337,14 +340,25 @@ for subject in subjects[subjects_to_run[0]:subjects_to_run[1]]:
                               n_jobs_freesurfer)
 
     if operations_to_apply['segment_mri']:
-        operations.segment_mri(subject, subjects_dir, n_jobs_freesurfer)          
+        operations.segment_mri(subject, subjects_dir, n_jobs_freesurfer)
+
+    if operations_to_apply['apply_watershed']:
+        operations.apply_watershed(subject, subjects_dir, overwrite)
+        
+    if operations_to_apply['make_dense_scalp_surfaces']:
+        operations.make_dense_scalp_surfaces(subject, subjects_dir, overwrite)
+        
+    if operations_to_apply['make_source_space']:
+        operations.make_source_space(subject, subjects_dir, source_space_method, 
+                                     overwrite)
+                                     
+    if operations_to_apply['make_bem_solutions']:
+        operations.make_bem_solutions(subject, subjects_dir)                                     
                                           
     #==========================================================================
     # SOURCE SPACES
     #==========================================================================
-                                          
-    ## use bash scripts to create source spaces
-                                          
+                                                                                    
     if operations_to_apply['plot_source_space']:
         plot.plot_source_space(name, subject, subjects_dir, save_plots,
                                figures_path)                                          
@@ -357,13 +371,7 @@ for subject in subjects[subjects_to_run[0]:subjects_to_run[1]]:
 
     if operations_to_apply['plot_transformation']:
         plot.plot_transformation(name, save_dir, subject, subjects_dir,
-                                 save_plots, figures_path)
-                                       
-    #==========================================================================
-    # CREATE BEM MODEL
-    #==========================================================================                                   
-
-    ## use bash scripts
+                                 save_plots, figures_path)                                      
 
     #==========================================================================
     # CREATE FORWARD MODEL

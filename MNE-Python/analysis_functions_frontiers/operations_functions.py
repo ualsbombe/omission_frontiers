@@ -7,7 +7,7 @@ import mne
 import numpy as np
 from os.path import join, isfile, isdir
 from scipy import stats
-from os import chdir, makedirs, listdir
+from os import makedirs, listdir
 import sys
 import io_functions as io
 import pickle
@@ -237,7 +237,6 @@ def run_process_and_write_output(command):
     for c in iter(lambda: process.stdout.read(1), ''):
              sys.stdout.write(c)
         
-
 def import_mri(dicom_path, subject, subjects_dir, n_jobs_freesurfer):
 
     files = listdir(dicom_path)
@@ -319,7 +318,7 @@ def make_dense_scalp_surfaces(subject, subjects_dir, overwrite):
     print 'Making dense scalp surfacing easing co-registration for ' + \
           'subject: ' + subject + \
           ". Output is written to the bem folder" + \
-          "of the subject's FreeSurfer folder" + \
+          " of the subject's FreeSurfer folder.\n" + \
           'Bash output follows below.\n\n'
           
     if overwrite:
@@ -338,7 +337,7 @@ def make_source_space(subject, subjects_dir, source_space_method, overwrite):
     print 'Making source space for ' + \
           'subject: ' + subject + \
           ". Output is written to the bem folder" + \
-          "of the subject's FreeSurfer folder" + \
+          " of the subject's FreeSurfer folder.\n" + \
           'Bash output follows below.\n\n'
           
     if overwrite:
@@ -354,20 +353,18 @@ def make_source_space(subject, subjects_dir, source_space_method, overwrite):
 
     run_process_and_write_output(command)        
           
-              
-          
 def make_bem_solutions(subject, subjects_dir):
        
     print 'Writing volume conductor for ' + \
           'subject: ' + subject + \
           ". Output is written to the bem folder" + \
-          "of the subject's FreeSurfer folder" + \
+          " of the subject's FreeSurfer folder.\n" + \
           'Bash output follows below.\n\n'
           
     command = ['mne_setup_forward_model',
                '--subject', subject,
                '--homog',
-               '--surf'
+               '--surf',
                '--ico', '4'
                ]
              
