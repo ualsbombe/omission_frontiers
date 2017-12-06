@@ -311,26 +311,7 @@ def apply_watershed(subject, subjects_dir, overwrite):
                    join(subjects_dir, subject, 'bem'    ,
                         this_surface['destination'])
                    ]
-        run_process_and_write_output(command)
-
-def make_dense_scalp_surfaces(subject, subjects_dir, overwrite):
-    
-    print 'Making dense scalp surfacing easing co-registration for ' + \
-          'subject: ' + subject + \
-          ". Output is written to the bem folder" + \
-          " of the subject's FreeSurfer folder.\n" + \
-          'Bash output follows below.\n\n'
-          
-    if overwrite:
-        overwrite_string = '--overwrite'
-    else:
-        overwrite_string = ''
-
-    command = ['mne_make_scalp_surfaces',
-               '--subject', subject,
-               overwrite_string]
-
-    run_process_and_write_output(command)        
+        run_process_and_write_output(command)       
 
 def make_source_space(subject, subjects_dir, source_space_method, overwrite):
       
@@ -351,7 +332,26 @@ def make_source_space(subject, subjects_dir, source_space_method, overwrite):
                overwrite_string
                ]
 
-    run_process_and_write_output(command)        
+    run_process_and_write_output(command)
+    
+def make_dense_scalp_surfaces(subject, subjects_dir, overwrite):
+    
+    print 'Making dense scalp surfacing easing co-registration for ' + \
+          'subject: ' + subject + \
+          ". Output is written to the bem folder" + \
+          " of the subject's FreeSurfer folder.\n" + \
+          'Bash output follows below.\n\n'
+          
+    if overwrite:
+        overwrite_string = '--overwrite'
+    else:
+        overwrite_string = ''
+
+    command = ['mne_make_scalp_surfaces',
+               '--subject', subject,
+               overwrite_string]
+
+    run_process_and_write_output(command) 
           
 def make_bem_solutions(subject, subjects_dir):
        

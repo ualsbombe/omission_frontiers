@@ -18,6 +18,7 @@ home_path = '/home/lau/' ## change this according to needs
 from os.path import join
 from os import chdir
 project_name = 'analyses/omission_frontiers_BIDS-MNE-Python/'
+project_name = 'analyses/bash_test/'
 script_path = join(home_path, project_name, 'scripts', 'python', 
                    'analysis_functions_frontiers')
 chdir(script_path)
@@ -30,7 +31,7 @@ import plot_functions as plot
 #%%============================================================================
 
 data_path = join(home_path, project_name, 'data/')
-subjects_dir = join(home_path, project_name + 'data/FreeSurfer/')
+subjects_dir = join(home_path, project_name, 'data/FreeSurfer/')
 name = 'oddball_absence'
 save_dir_averages = data_path + 'grand_averages/'
 figures_path = join(home_path, project_name, 'figures/')
@@ -58,7 +59,7 @@ subjects = [
                          'sub-20'
                      ]
 subjects_to_run = (None, None) ## means all subjects
-subjects_to_run = (5, 6) # subject indices to run, if you don't want to run all
+subjects_to_run = (0, 1) # subject indices to run, if you don't want to run all
                               
 #==============================================================================
 # OPERATIONS                     
@@ -82,9 +83,9 @@ operations_to_apply = dict(
                     ## source space operations
                     import_mri=0,
                     segment_mri=0, # long process (>6 h)
-                    apply_watershed=0,
-                    make_dense_scalp_surfaces=0,
+                    apply_watershed=1,
                     make_source_space=0,
+                    make_dense_scalp_surfaces=0,
                     make_bem_solutions=0,
                     create_forward_solution=0,
                     estimate_noise_covariance=0, 
@@ -110,7 +111,7 @@ operations_to_apply = dict(
                     plot_butterfly_evokeds=0,
                     
                     ## plotting source space (within subject)
-                    plot_transformation=1,
+                    plot_transformation=0,
                     plot_source_space=0,
                     plot_noise_covariance=0,
                     plot_source_estimates=0,
@@ -133,7 +134,7 @@ operations_to_apply = dict(
 # PARAMETERS                     
 #%%============================================================================
 ## should files be overwritten
-overwrite = False ## this counts for all operations below that save output
+overwrite = True ## this counts for all operations below that save output
 save_plots = True ## should plots be saved
                     
 ## raw        

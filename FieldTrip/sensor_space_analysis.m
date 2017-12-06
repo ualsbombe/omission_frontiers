@@ -51,7 +51,7 @@ subjects = {
 %% TEST ONLY ONE SUBJECT
 % index subjects from 1:20 according to how many you want to run (:) all
 
-subjects = subjects(1);
+subjects = subjects(:);
 
 %% DEFINE TRIALS AND PREPROCESS
 % uses: ft_definetrial; ft_preprocessing, ft_appenddata,

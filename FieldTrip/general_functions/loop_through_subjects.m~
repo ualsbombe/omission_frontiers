@@ -4,10 +4,7 @@ function [] = loop_through_subjects(subjects, data_dir, ...
 % This function loops through all subjects, applies the supplied function
 % ("function_name") with the given configuration ("cfg") and spits out the 
 % output ("output") given the input ("input").
-
-% time total length of operation
-tstart = tic;
-
+                                    
 n_subjects = length(subjects);
 
 for subject_index = 1:n_subjects
@@ -63,11 +60,10 @@ for subject_index = 1:n_subjects
         tic;
         output_variables = feval(function_name, cfg, input_variables);
         T = toc;
-        fprintf(['\n\nApplying function: ' function_name ...
-                ' for subject: ' ...
-                subject ' took: ' num2str(T) ' s; or: ' ...
-                num2str(T/60) ' min.; or: ' ...
-                num2str(T/3600) ' h\n\n'])
+        disp(['Applying function: ' function_name ' for subject: ' ...
+              subject ' took: ' num2str(T) ' s; or: '
+              num2str(T/60) ' min.; or: ' ...
+              num2str(T/3600) ' h']) 
         if ~iscell(output_variables)
             error('Output must be specified as a cell array of strings')
         end
@@ -112,11 +108,3 @@ for subject_index = 1:n_subjects
                           ' to overwrite']);
     end
 end
-
-T = toc(tstart);
-fprintf(['\n\nApplying function: ' function_name ...
-         ' for ' num2str(n_subjects) ' subjects: ' ...
-         subject ' took: ' num2str(T) ' s; or: ' ...
-         num2str(T/60) ' min.; or: ' ...
-         num2str(T/3600) ' h\n\n'])
-
