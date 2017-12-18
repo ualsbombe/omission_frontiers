@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed April  19 17:30 2017
-@author: lau
+Pipeline for group analysis of MEG data - operations functions
+@author: Lau Møller Andersen
+@email: lau.moller.andersen@ki.se | lau.andersen@cnru.dk
+@github: https://github.com/ualsbombe/omission_frontiers.git
 """
+
 import mne
 import numpy as np
 from os.path import join, isfile, isdir
