@@ -51,7 +51,7 @@ subjects = {
 %% TEST ONLY ONE SUBJECT
 % index subjects from 1:20 according to how many you want to run (:) all
 
-subjects = subjects(:);
+subjects = subjects(1);
 
 %% DEFINE TRIALS AND PREPROCESS
 % uses: ft_definetrial; ft_preprocessing, ft_appenddata,
@@ -131,7 +131,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_componentanalysis
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {'cleaned_data'};
 output = {'ica'};
 function_name = 'run_ica';
@@ -203,7 +203,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_freqanalysis
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {'untimelocked_data'};
 output = {'tfr'};
 function_name = 'time_frequency_representation';
@@ -225,7 +225,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_combineplanar
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {'tfr'};
 output = {'combined_tfr'};
 function_name = 'combine_gradiometers';

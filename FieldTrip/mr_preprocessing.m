@@ -50,13 +50,13 @@ subjects = {
 %% TEST ONLY ONE SUBJECT
 % index subjects from 1:20 according to how many you want to run (:) all
 
-subjects = subjects(1);
+subjects = subjects([18 20]);
 
 %% READ DICOMS
 %uses: ft_read_mri
 
 % options for the functions
-overwrite = false;
+overwrite = true;
 input = {}; %% no MATLAB file format input
 output = {'mri'};
 function_name = 'read_dicoms';
@@ -75,7 +75,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 %uses: ft_volumerealign	
 
 % options for the functions
-overwrite = false;
+overwrite = true;
 input = {'mri'};
 output = {'mri_realigned_fiducials'};
 function_name = 'realign_to_fiducials';
@@ -92,7 +92,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 %uses: ft_volumerealign	and ft_read_headshape
 
 % options for the functions
-overwrite = false;
+overwrite = true;
 input = {'mri_realigned_fiducials'};
 output = {'mri_realigned_digitization_points'};
 function_name = 'realign_to_digitization_points';
@@ -111,7 +111,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 %uses: ft_volumesegment
 
 % options for the functions
-overwrite = false;
+overwrite = true;
 input = {'mri_realigned_digitization_points'};
 output = {'mri_segmented'};
 function_name = 'segment_mri';
@@ -127,7 +127,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 %uses: ft_prepare_mesh
 
 % options for the functions
-overwrite = false;
+overwrite = true;
 input = {'mri_segmented'};
 output = {'brain_mesh'};
 function_name = 'make_brain_mesh';
@@ -145,7 +145,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 %uses: ft_prepare_headmodel
 
 % options for the functions
-overwrite = false;
+overwrite = true;
 input = {'brain_mesh'};
 output = {'headmodel'};
 function_name = 'make_headmodel';
@@ -161,7 +161,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 %uses: ft_prepare_sourcemodel
 
 % options for the functions
-overwrite = false;
+overwrite = true;
 input = {'mri_realigned_digitization_points'};
 output = {'warped_grid'};
 function_name = 'make_warped_grid';
@@ -182,7 +182,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 %uses: ft_prepare_leadfield
 
 % options for the functions
-overwrite = false;
+overwrite = true;
 input = {'warped_grid' 'headmodel'};
 output = {'leadfield'};
 function_name = 'make_leadfield';

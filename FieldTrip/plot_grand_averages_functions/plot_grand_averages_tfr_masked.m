@@ -43,8 +43,18 @@ end
 figure('units', 'normalized', 'outerposition', [0 0 1 1]);% full screen fig
 for comparison_index = 1:n_comparisons
     cfg.singleplot.title = cfg.title_names{comparison_index};
+    cfg.singleplot.colorbar = 'no';
     subplot(subplot_row, ceil(n_comparisons/subplot_row), comparison_index)
     ft_singleplotTFR(cfg.singleplot, differences{comparison_index});
+    xlabel('Time (s)')
+    ylabel('Frequency (Hz)')
+    c = colorbar('location', 'east');
+    c.Position = [c.Position(1) + 0.05 c.Position(2:end)];
+    c.Ticks = cfg.singleplot.zlim(1):0.1:cfg.singleplot.zlim(2);
+    c.Label.String = cfg.singleplot.colorbar_label;
+    c.Label.Position = [c.Label.Position(1) + 8 ...
+                          c.Label.Position(2:end)];
+    c.Label.FontSize = 30;
 end
 h1 = figure(1);
 

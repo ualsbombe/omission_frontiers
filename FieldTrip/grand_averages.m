@@ -76,7 +76,7 @@ apply_across_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourcegrandaverage
 
 % options for the function
-overwrite = false;
+overwrite = true;
 running_on_grand_average = false;
 input = {'beamformer_contrasts'};
 output = {'grand_average_beamformer'};
@@ -100,7 +100,7 @@ apply_across_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourceinterpolate
 
 % options for the function
-overwrite = false;
+overwrite = true;
 running_on_grand_average = true;
 input = {'grand_average_beamformer'};
 output = {'grand_average_beamformer_interpolated'};
@@ -111,6 +111,7 @@ cfg = [];
 cfg.events = {1 2 3 13 14 15};
 cfg.parameter = {'pow' 'inside'};
 cfg.downsample = 2;
+cfg.interpmethod = 'linear';
 cfg.template_path = fullfile(matlab_dir, 'fieldtrip', 'template', ...
                             'headmodel', 'standard_mri.mat');
 

@@ -91,7 +91,7 @@ apply_across_subjects(subjects, data_dir, function_name, ...
 % uses: ft_math, ft_singleplotTFR and ft_multiplotTFR
 
 % options for the function
-overwrite = false;
+overwrite = true;
 running_on_grand_average = true;
 input = {'grand_average_tfr' 'statistics/statistics_tfr'};
 output = {'sensor_space/singleplot_tfr_masked' ...
@@ -100,13 +100,14 @@ function_name = 'plot_grand_averages_tfr_masked';
 
 % build configuration
 cfg = [];
-cfg.event_comparisons = {[3 15]};
-cfg.title_names = {'Standard 3 vs Omission 6'};
+cfg.event_comparisons = {[1 3]};
+cfg.title_names = {'Standard 1 vs Standard 3'};
 
 cfg.singleplot = [];
 cfg.singleplot.layout = 'neuromag306cmb.lay';
-cfg.singleplot.channel = 'MEG0432+0433'; %% combined "tactile" channel
-% cfg.singleplot.zlim = [0.8 1.6];
+cfg.singleplot.channel = 'MEG0712+0713'; %% combined "tactile" channel
+cfg.singleplot.zlim = [-0.1 0.1];
+cfg.singleplot.colorbar_label = 'Difference';
 cfg.singleplot.maskparameter = 'mask';
 
 cfg.multiplot = [];
@@ -125,19 +126,22 @@ apply_across_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourceplot
 
 % options for the function
-overwrite = false;
+overwrite = true;
 running_on_grand_average = true;
-input = {'grand_average_beamformer_interpolated'};
+input = {'grand_average_beamformer'};
 output = {'source_space/surface_beamformer'};
 function_name = 'plot_grand_averages_beamformer';
 
 % build configuration
 cfg = [];
 cfg.events = {3};
-cfg.title_names = {''}; %{'Standard 3'};
+cfg.title_names = {'Standard 3'}; %{'Standard 3'};
 cfg.method = 'surface';
 cfg.funparameter = 'pow';
 cfg.colorbar = 'yes';
+cfg.funcolorlim = [-0.25 0.25];
+% cfg.atlas = fullfile(matlab_dir, 'fieldtrip', 'template', 'atlas', ...
+%     'aal', 'ROI_MNI_V4.nii');
 
 % Run "apply_across_subjects" function
 apply_across_subjects(subjects, data_dir, function_name, ...
@@ -148,7 +152,7 @@ apply_across_subjects(subjects, data_dir, function_name, ...
 % uses: ft_math, ft_sourceplot
 
 % options for the function
-overwrite = false;
+overwrite = true;
 running_on_grand_average = true;
 input = {'grand_average_beamformer_interpolated' ...
          'statistics/statistics_beamformer_interpolated'};
@@ -157,12 +161,15 @@ function_name = 'plot_grand_averages_beamformer_masked';
 
 % build configuration
 cfg = [];
-cfg.event_comparisons = {[3 15]};
-cfg.title_names = {'Standard 3 vs Omission 6'};
+cfg.event_comparisons = {[1 3]};
+cfg.title_names = {'Standard 1 vs Standard 3'};
 cfg.method = 'ortho';
 cfg.funparameter = 'pow';
 cfg.maskparameter = 'mask';
 cfg.funcolormap = 'jet';
+cfg.funcolorlim = [-0.2 0.2];
+cfg.crosshair = 'no';
+cfg.location = [-34 -21 58];
 cfg.atlas = fullfile(matlab_dir, 'fieldtrip', 'template', 'atlas', ...
     'aal', 'ROI_MNI_V4.nii');
 

@@ -51,7 +51,7 @@ subjects = {
 %% TEST ONLY ONE SUBJECT
 % index subjects from 1:20 according to how many you want to run (:) all
 
-subjects = subjects(1);
+subjects = subjects(2);
                 
 %% SET PLOT DEFAULTS
 
@@ -81,7 +81,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % ft_convert_units and ft_plot_mesh
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {'headmodel' 'mri_realigned_digitization_points' 'mri_segmented'};
 output = {'mri/sens_headshape_mri_axes' ...
           'mri/anat_mriseg' ...
@@ -105,7 +105,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_plot_mesh and ft_plot_vol
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {'headmodel' 'warped_grid'};
 output = {'mri/headmodel_inside_grid';
           };

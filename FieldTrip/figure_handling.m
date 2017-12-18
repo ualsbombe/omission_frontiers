@@ -84,9 +84,9 @@ create_image_files_from_figure_files(subjects, figures_dir, ...
 overwrite = false; %% should existing files be overwritten
 input = {
 %          'sensor_space/singleplot_tfr'
-%          'sensor_space/singleplot_tfr_masked' 
+         'sensor_space/singleplot_tfr_masked' 
 %          'sensor_space/multiplot_tfr_masked'
-         'sensor_space/topoplot_tfr'
+%          'sensor_space/topoplot_tfr'
 %          'source_space/surface_beamformer' 
 %          'source_space/beamformer_masked' 
 %          'source_space/surface_beamformer_for_cookbook'

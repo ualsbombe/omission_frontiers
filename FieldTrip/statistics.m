@@ -62,7 +62,7 @@ function_name = 'statistics_tfrs';
 
 % build configuration
 cfg = [];
-cfg.event_comparisons = {[3 15]}; % events to compare
+cfg.event_comparisons = {[1 3]}; % events to compare
 cfg.method = 'analytic'; %% do a mass-univariate test
 cfg.alpha = 0.05; %% critical value around ± 2.09
 cfg.statistic = 'depsamplesT'; % use a dependent samples t-test
@@ -80,7 +80,7 @@ apply_across_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourcestatistics
 
 % options for the function
-overwrite = false;
+overwrite = true;
 running_on_grand_average = false;
 input = {'beamformer_contrasts'};
 output = {'statistics/statistics_beamformer'};
@@ -88,7 +88,7 @@ function_name = 'statistics_beamformer';
 
 % build configuration
 cfg = [];
-cfg.event_comparisons = {[3 15]}; % events to compare
+cfg.event_comparisons = {[1 3]}; % events to compare
 cfg.method = 'analytic'; %% do a mass-univariate test
 cfg.alpha = 0.05; %% critical value around ± 2.09
 cfg.statistic = 'depsamplesT'; % use a dependent samples t-test
@@ -110,7 +110,7 @@ apply_across_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourceinterpolate
 
 % options for the function
-overwrite = false;
+overwrite = true;
 running_on_grand_average = true;
 input = {'statistics/statistics_beamformer'};
 output = {'statistics/statistics_beamformer_interpolated'};
@@ -118,10 +118,11 @@ function_name = 'interpolate_statistics_beamformer';
 
 % build configuration
 cfg = [];
-cfg.parameter = {'stat' 'prob' 'mask' 'inside'};% parameters to interpolate
+cfg.parameter = {'stat' 'inside' 'prob', 'mask'};%parameters to interpolate
 cfg.downsample = 2;
+cfg.interpmethod = 'linear';
 
-cfg.event_comparisons = {[3 15]};
+cfg.event_comparisons = {[1 3]};
 cfg.template_path = fullfile(matlab_dir, 'fieldtrip', 'template', ...
                             'headmodel', 'standard_mri.mat');
 

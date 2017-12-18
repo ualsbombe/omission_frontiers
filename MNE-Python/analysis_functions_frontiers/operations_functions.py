@@ -7,7 +7,7 @@ import mne
 import numpy as np
 from os.path import join, isfile, isdir
 from scipy import stats
-from os import makedirs, listdir
+from os import makedirs, listdir, environ
 import sys
 import io_functions as io
 import pickle
@@ -101,7 +101,7 @@ def filter_raw(name, save_dir, lowpass, overwrite):
     filter_path = join(save_dir, filter_name)
     if overwrite or not isfile(filter_path):
     
-        raw = io.read_maxfiltered(save_dir)
+        raw = io.read_maxfiltered(name, save_dir)
         raw.filter(None, lowpass)
         
         filter_name = name  + filter_string(lowpass) + '-raw.fif'
@@ -231,8 +231,11 @@ def grand_average_evokeds(evoked_data_all, save_dir_averages, lowpass):
 #==============================================================================
         
 ## local function used in the bash commands below
-def run_process_and_write_output(command):
-    process = subprocess.Popen(command, stdout=subprocess.PIPE)
+def run_process_and_write_output(command, subjects_dir):
+    environment = environ.copy()
+    environment["SUBJECTS_DIR"] = subjects_dir
+    process = subprocess.Popen(command, stdout=subprocess.PIPE,
+                               env=environment)
     ## write bash output in python console
     for c in iter(lambda: process.stdout.read(1), ''):
              sys.stdout.write(c)
@@ -252,7 +255,7 @@ def import_mri(dicom_path, subject, subjects_dir, n_jobs_freesurfer):
                    '-i', join(dicom_path, first_file),
                    '-openmp', str(n_jobs_freesurfer)]             
         
-        run_process_and_write_output(command)
+        run_process_and_write_output(command, subjects_dir)
     else:
         print('FreeSurfer folder for: ' + subject + ' already exists.' + \
               ' To import data from the beginning, you would have to ' + \
@@ -269,7 +272,7 @@ def segment_mri(subject, subjects_dir, n_jobs_freesurfer):
                '-all',
                '-openmp', str(n_jobs_freesurfer)]
     
-    run_process_and_write_output(command)
+    run_process_and_write_output(command, subjects_dir)
 
 def apply_watershed(subject, subjects_dir, overwrite):
     
@@ -287,7 +290,7 @@ def apply_watershed(subject, subjects_dir, overwrite):
                '--subject', subject,
                overwrite_string]          
 
-    run_process_and_write_output(command)
+    run_process_and_write_output(command, subjects_dir)
     ## copy commands
     surfaces = dict(
             inner_skull=dict(
@@ -311,7 +314,7 @@ def apply_watershed(subject, subjects_dir, overwrite):
                    join(subjects_dir, subject, 'bem'    ,
                         this_surface['destination'])
                    ]
-        run_process_and_write_output(command)       
+        run_process_and_write_output(command, subjects_dir)       
 
 def make_source_space(subject, subjects_dir, source_space_method, overwrite):
       
@@ -332,7 +335,7 @@ def make_source_space(subject, subjects_dir, source_space_method, overwrite):
                overwrite_string
                ]
 
-    run_process_and_write_output(command)
+    run_process_and_write_output(command, subjects_dir)
     
 def make_dense_scalp_surfaces(subject, subjects_dir, overwrite):
     
@@ -351,7 +354,7 @@ def make_dense_scalp_surfaces(subject, subjects_dir, overwrite):
                '--subject', subject,
                overwrite_string]
 
-    run_process_and_write_output(command) 
+    run_process_and_write_output(command, subjects_dir) 
           
 def make_bem_solutions(subject, subjects_dir):
        
@@ -368,7 +371,7 @@ def make_bem_solutions(subject, subjects_dir):
                '--ico', '4'
                ]
              
-    run_process_and_write_output(command)       
+    run_process_and_write_output(command, subjects_dir)       
 
 #==============================================================================
 # MNE SOURCE RECONSTRUCTIONS

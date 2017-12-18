@@ -51,13 +51,13 @@ subjects = {
 %% TEST ONLY ONE SUBJECT
 % index subjects from 1:20 according to how many you want to run (:) all
 
-subjects = subjects(:);
+subjects = subjects(11:20);
 
 %% CROP DATA INTO TIMES OF INTEREST
 % uses: ft_redefinetrial and ft_selectdata
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {'untimelocked_data'};
 output = {'cropped_untimelocked_data'};
 function_name = 'crop_data';
@@ -67,7 +67,7 @@ cfg = [];
 cfg.events = {1 2 3 13 14 15 21};
 
 cfg.redefine_trial = [];
-cfg.redefine_trial.toilim = [0.500 0.900]; % s
+cfg.redefine_trial.toilim = [0.800 1.200]; % s
 
 cfg.select_data = [];
 cfg.select_data.channel = 'MEGGRAD'; % only gradiometers
@@ -80,7 +80,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_freqanalysis and ft_appenddata
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {'cropped_untimelocked_data'};
 output = {'experimental_conditions_fourier' 'non_stimulation_fourier' ...
           'combined_fourier'};
@@ -106,7 +106,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourceanalysis
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {'experimental_conditions_fourier' 'non_stimulation_fourier' ...
          'combined_fourier' 'headmodel' 'leadfield'};
 output = {'beamformer_contrasts'};
@@ -132,7 +132,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourceinterpolate
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {'beamformer_contrasts'};
 output = {'beamformer_contrasts_interpolated'};
 function_name = 'interpolate_beamformer';

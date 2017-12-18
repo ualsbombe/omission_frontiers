@@ -18,7 +18,6 @@ home_path = '/home/lau/' ## change this according to needs
 from os.path import join
 from os import chdir
 project_name = 'analyses/omission_frontiers_BIDS-MNE-Python/'
-project_name = 'analyses/bash_test/'
 script_path = join(home_path, project_name, 'scripts', 'python', 
                    'analysis_functions_frontiers')
 chdir(script_path)
@@ -59,7 +58,7 @@ subjects = [
                          'sub-20'
                      ]
 subjects_to_run = (None, None) ## means all subjects
-subjects_to_run = (0, 1) # subject indices to run, if you don't want to run all
+#subjects_to_run = (0, 1) # subject indices to run, if you don't want to run all
                               
 #==============================================================================
 # OPERATIONS                     
@@ -83,7 +82,7 @@ operations_to_apply = dict(
                     ## source space operations
                     import_mri=0,
                     segment_mri=0, # long process (>6 h)
-                    apply_watershed=1,
+                    apply_watershed=0,
                     make_source_space=0,
                     make_dense_scalp_surfaces=0,
                     make_bem_solutions=0,

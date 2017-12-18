@@ -6,6 +6,9 @@ function [] = apply_across_subjects(subjects, data_dir, ...
 % (a grand average). Input is/are the input file(s) and output is/are the
 % output file(s)
 
+% time total length of operation
+tstart = tic;
+
 % establish whether function should be run (does output already exist?)
 output_path_data    = fullfile(data_dir, 'grand_averages');
 output_path_figures = fullfile(figures_dir, 'grand_averages');
@@ -20,6 +23,8 @@ for output_index = 1:n_outputs
                                             output{output_index});
     end
 end
+n_subjects = length(subjects);
+
 
 % should the operation be run?
 do_the_operation = overwrite || ...
@@ -28,7 +33,6 @@ do_the_operation = overwrite || ...
 
 if do_the_operation
     if ~running_on_grand_average
-        n_subjects = length(subjects);
         % data cell to put single subject data into
         data_cell = cell(1, n_subjects);
         % get the relevant data for each subject
@@ -66,7 +70,8 @@ if do_the_operation
             end
             input_variables = cell(1, n_inputs);
             for input_index = 1:n_inputs
-                disp(['Loading ' input{input_index} ' from grand_averages'])
+                disp(['Loading ' input{input_index} ...
+                      ' from grand_averages'])
                 % load as a struct
                 tic; s = load(load_names{input_index}); toc
                 input_variables{input_index} = s;
@@ -97,7 +102,7 @@ if do_the_operation
             disp(['Saving figure ' output{output_index} ...
                     ' for: grand averages']);
             if size_output_variable < two_gigabyte
-                tic; savefig(output_variable, save_names{output_index}); toc
+                tic; savefig(output_variable, save_names{output_index});toc
             else
                 tic; hgsave(output_variable, save_names{output_index}, ...
                        '-v7.3'); toc
@@ -114,4 +119,13 @@ if do_the_operation
 else
     disp([save_names{1} ' already exists. Set "overwrite" '... 
                 'to "true" to overwrite']);
+end
+
+T = toc(tstart);
+if do_the_operation
+    fprintf(['\n\nApplying function: ' function_name ...
+             ' for ' num2str(n_subjects) ' subject(s)' ...
+             ' took: ' num2str(T) ' s; or: ' ...
+             num2str(T/60) ' min.; or: ' ...
+             num2str(T/3600) ' h\n\n'])
 end

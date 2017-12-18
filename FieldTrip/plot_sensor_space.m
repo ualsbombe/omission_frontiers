@@ -61,7 +61,7 @@ set(0, 'defaultaxesfontsize', 30, 'defaultaxesfontweight', 'bold')
 % uses: ft_preprocessing, ft_appenddata and ft_databrowser
 
 % options for the function
-overwrite = false;
+overwrite = true;
 input = {};
 output = {'raw/continuous'};
 function_name = 'plot_raw';
@@ -92,6 +92,26 @@ cfg = [];
 cfg.continuous = 'yes';
 cfg.viewmode = 'butterfly';
 cfg.channel_sets = {'MEGMAG' 'MEGGRAD'};
+
+% Run "loop_through_subjects" function
+loop_through_subjects(subjects, data_dir, function_name, ...
+                      cfg, output, input, figures_dir, overwrite);
+                  
+%% PLOT BAD EPOCHS
+% uses: ft_databrowser
+
+% options for the function
+overwrite = true;
+input = {'preprocessed_data'};
+output = {'epochs/butterfly_mag_bad' 'epochs/butterfly_grad_bad'};
+function_name = 'plot_epochs';
+
+% build configuration
+cfg = [];
+cfg.continuous = 'yes';
+cfg.viewmode = 'butterfly';
+cfg.channel_sets = {'MEGMAG' 'MEGGRAD'};
+cfg.trial_indices_filename = 'removed_trial_indices.tsv';
 
 % Run "loop_through_subjects" function
 loop_through_subjects(subjects, data_dir, function_name, ...

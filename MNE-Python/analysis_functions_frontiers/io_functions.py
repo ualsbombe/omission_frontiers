@@ -108,7 +108,7 @@ def read_forward(name, save_dir):
 
     forward_name = name + '-fwd.fif'
     forward_path = join(save_dir, forward_name)
-    forward = mne.read_forward_solution(forward_path, surf_ori=True)
+    forward = mne.read_forward_solution(forward_path)
     
     return forward
     

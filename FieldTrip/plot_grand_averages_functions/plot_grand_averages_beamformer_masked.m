@@ -31,6 +31,7 @@ for comparison_index = 1:n_comparisons;
     difference = ft_math(cfg_math, plot_data_1, plot_data_2);
     stat_comparison = stat.(comparison_name);
     difference.mask = stat_comparison.mask;
+%     difference.mask = difference.mask == 1;
     difference.coordsys = 'mni';
     difference.anatomy = plot_data_1.anatomy;
     differences{comparison_index} = difference;
