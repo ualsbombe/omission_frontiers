@@ -59,7 +59,7 @@ subjects = [
                          'sub-20'
                      ]
 subjects_to_run = (None, None) ## means all subjects
-#subjects_to_run = (0, 1) # subject indices to run, if you don't want to run all
+#subjects_to_run = (0, 1)# subject indices to run, if you don't want to run all
                               
 #==============================================================================
 # OPERATIONS                     
@@ -134,7 +134,7 @@ operations_to_apply = dict(
 # PARAMETERS                     
 #%%============================================================================
 ## should files be overwritten
-overwrite = True ## this counts for all operations below that save output
+overwrite = False ## this counts for all operations below that save output
 save_plots = True ## should plots be saved
                     
 ## raw        

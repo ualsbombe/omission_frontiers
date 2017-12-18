@@ -396,6 +396,8 @@ def create_forward_solution(name, save_dir, subject, subjects_dir,
         forward = mne.make_forward_solution(info, trans, source_space, bem,
                                               n_jobs=1)
         
+        forward = mne.convert_forward_solution(forward, surf_ori=True)
+        
         mne.write_forward_solution(forward_path, forward, overwrite)
         
     else:
@@ -505,10 +507,10 @@ def average_morphed_data(morphed_data_all, method, save_dir_averages, lowpass):
  
     averaged_morphed_data = dict()
     
-    n_subjects = len(morphed_data_all['standard_1']) ## 
+    n_subjects = len(morphed_data_all['standard_1']) 
     for trial_type in morphed_data_all:
         trial_morphed_data = morphed_data_all[trial_type]
-        trial_average = trial_morphed_data[0].copy() ## get copy of first instance 
+        trial_average = trial_morphed_data[0].copy()#get copy of first instance 
         
         for trial_index in range(1, n_subjects):
             trial_average._data += trial_morphed_data[trial_index].data
