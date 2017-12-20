@@ -5,6 +5,7 @@ Pipeline for group analysis of MEG data - IO functions
 @email: lau.moller.andersen@ki.se | lau.andersen@cnru.dk
 @github: https://github.com/ualsbombe/omission_frontiers.git
 """
+from __future__ import print_function
 
 import mne
 from os.path import join
@@ -48,7 +49,7 @@ def read_maxfiltered(name, save_dir):
             split_string_number += 1
         except:
             read_all_files = True
-            print str(split_string_number) + ' raw files were read' 
+            print(str(split_string_number) + ' raw files were read') 
         
     raw = mne.concatenate_raws(raws)
     
