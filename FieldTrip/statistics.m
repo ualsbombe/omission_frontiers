@@ -21,7 +21,7 @@ addpath(fullfile(script_dir, 'general_functions'));
 addpath(fullfile(script_dir, 'statistics_functions'));
 
 %% SUBJECTS
-% these are the subjects names
+% these are the subject names
 
 subjects = {
         
@@ -80,7 +80,7 @@ apply_across_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourcestatistics
 
 % options for the function
-overwrite = true;
+overwrite = false;
 running_on_grand_average = false;
 input = {'beamformer_contrasts'};
 output = {'statistics/statistics_beamformer'};
@@ -110,7 +110,7 @@ apply_across_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourceinterpolate
 
 % options for the function
-overwrite = true;
+overwrite = false;
 running_on_grand_average = true;
 input = {'statistics/statistics_beamformer'};
 output = {'statistics/statistics_beamformer_interpolated'};

@@ -21,7 +21,7 @@ addpath(fullfile(script_dir, 'general_functions'));
 addpath(fullfile(script_dir, 'source_space_analysis_functions'));
 
 %% SUBJECTS
-% these are the subjects names
+% these are the subject names
 
 subjects = {
         
@@ -48,16 +48,16 @@ subjects = {
                      
                      };
                  
-%% TEST ONLY ONE SUBJECT
+%% CHOOSE THE NUMBER OF SUBJECTS RUN
 % index subjects from 1:20 according to how many you want to run (:) all
 
-subjects = subjects(11:20);
+subjects = subjects(1);
 
 %% CROP DATA INTO TIMES OF INTEREST
 % uses: ft_redefinetrial and ft_selectdata
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'untimelocked_data'};
 output = {'cropped_untimelocked_data'};
 function_name = 'crop_data';
@@ -80,7 +80,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_freqanalysis and ft_appenddata
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'cropped_untimelocked_data'};
 output = {'experimental_conditions_fourier' 'non_stimulation_fourier' ...
           'combined_fourier'};
@@ -106,7 +106,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourceanalysis
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'experimental_conditions_fourier' 'non_stimulation_fourier' ...
          'combined_fourier' 'headmodel' 'leadfield'};
 output = {'beamformer_contrasts'};
@@ -132,7 +132,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_sourceinterpolate
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'beamformer_contrasts'};
 output = {'beamformer_contrasts_interpolated'};
 function_name = 'interpolate_beamformer';

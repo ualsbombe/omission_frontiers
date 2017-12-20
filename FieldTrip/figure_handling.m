@@ -20,7 +20,7 @@ ft_defaults %% initialize FieldTrip defaults
 addpath(fullfile(script_dir, 'general_functions'));
 
 %% SUBJECTS
-% these are the subjects names
+% these are the subject names
 
 subjects = {
         
@@ -47,7 +47,7 @@ subjects = {
                      
                      };
                  
-%% TEST ONLY ONE SUBJECT
+%% CHOOSE THE NUMBER OF SUBJECTS RUN
 % index subjects from 1:20 according to how many you want to run (:) all
 
 subjects = subjects(1);
@@ -84,9 +84,9 @@ create_image_files_from_figure_files(subjects, figures_dir, ...
 overwrite = false; %% should existing files be overwritten
 input = {
 %          'sensor_space/singleplot_tfr'
-         'sensor_space/singleplot_tfr_masked' 
+%          'sensor_space/singleplot_tfr_masked' 
 %          'sensor_space/multiplot_tfr_masked'
-%          'sensor_space/topoplot_tfr'
+         'sensor_space/topoplot_tfr'
 %          'source_space/surface_beamformer' 
 %          'source_space/beamformer_masked' 
 %          'source_space/surface_beamformer_for_cookbook'

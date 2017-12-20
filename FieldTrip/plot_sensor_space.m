@@ -21,7 +21,7 @@ addpath(fullfile(script_dir, 'general_functions'));
 addpath(fullfile(script_dir, 'plot_sensor_space_functions'));
 
 %% SUBJECTS
-% these are the subjects names
+% these are the subject names
 
 subjects = {
         
@@ -48,7 +48,7 @@ subjects = {
                      
                      };
                  
-%% TEST ONLY ONE SUBJECT
+%% CHOOSE THE NUMBER OF SUBJECTS RUN
 % index subjects from 1:20 according to how many you want to run (:) all
 
 subjects = subjects(1);
@@ -61,13 +61,14 @@ set(0, 'defaultaxesfontsize', 30, 'defaultaxesfontweight', 'bold')
 % uses: ft_preprocessing, ft_appenddata and ft_databrowser
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {};
 output = {'raw/continuous'};
 function_name = 'plot_raw';
 
 % build configuration
 cfg = [];
+cfg.save_figure = false;
 cfg.continuous = 'yes';
 cfg.viewmode = 'vertical';
 cfg.channel = 'MEG';
@@ -89,6 +90,7 @@ function_name = 'plot_epochs';
 
 % build configuration
 cfg = [];
+cfg.save_figure = false;
 cfg.continuous = 'yes';
 cfg.viewmode = 'butterfly';
 cfg.channel_sets = {'MEGMAG' 'MEGGRAD'};
@@ -101,13 +103,14 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_databrowser
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'preprocessed_data'};
 output = {'epochs/butterfly_mag_bad' 'epochs/butterfly_grad_bad'};
 function_name = 'plot_epochs';
 
 % build configuration
 cfg = [];
+cfg.save_figure = false;
 cfg.continuous = 'yes';
 cfg.viewmode = 'butterfly';
 cfg.channel_sets = {'MEGMAG' 'MEGGRAD'};
@@ -128,6 +131,7 @@ function_name = 'plot_ica';
 
 % build configuration
 cfg = [];
+cfg.save_figure = false;
 
 cfg.continuous = [];
 cfg.continuous.layout = 'neuromag306mag.lay';
@@ -154,6 +158,7 @@ function_name = 'plot_timelockeds';
 % build configuration
 cfg = [];
 cfg.events = {1 2 3 13 14 15 21};
+cfg.save_figure = false;
 
 cfg.multiplot = [];
 cfg.multiplot.layout = 'neuromag306mag.lay';
@@ -187,11 +192,12 @@ cfg = [];
 cfg.events = {1 2 3 13 14 15};
 cfg.title_names = {'Standard 1' 'Standard 2' 'Standard 3' ...
     'Omission 4' 'Omission 5' 'Omission 6'};
+cfg.save_figure = false;
 
 cfg.singleplot = [];
 cfg.singleplot.layout = 'neuromag306cmb.lay';
 cfg.singleplot.channel = 'MEG0432+0433'; %% combined "tactile" channel
-cfg.singleplot.zlim = [0.8 1.6];
+cfg.singleplot.zlim = [0.8 1.8];
 cfg.singleplot.fontsize = 30;
 
 cfg.topoplot = [];

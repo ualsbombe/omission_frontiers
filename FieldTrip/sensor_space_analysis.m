@@ -21,7 +21,7 @@ addpath(fullfile(script_dir, 'general_functions'));
 addpath(fullfile(script_dir, 'sensor_space_analysis_functions'));
 
 %% SUBJECTS
-% these are the subjects names
+% these are the subject names
 
 subjects = {
         
@@ -48,7 +48,7 @@ subjects = {
                      
                      };
                  
-%% TEST ONLY ONE SUBJECT
+%% CHOOSE THE NUMBER OF SUBJECTS RUN
 % index subjects from 1:20 according to how many you want to run (:) all
 
 subjects = subjects(1);
@@ -131,7 +131,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_componentanalysis
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'cleaned_data'};
 output = {'ica'};
 function_name = 'run_ica';
@@ -203,7 +203,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_freqanalysis
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'untimelocked_data'};
 output = {'tfr'};
 function_name = 'time_frequency_representation';
@@ -225,7 +225,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_combineplanar
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'tfr'};
 output = {'combined_tfr'};
 function_name = 'combine_gradiometers';

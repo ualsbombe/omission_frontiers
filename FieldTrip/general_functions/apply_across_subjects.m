@@ -29,7 +29,8 @@ n_subjects = length(subjects);
 % should the operation be run?
 do_the_operation = overwrite || ...
                    (~exist([save_names{1} '.mat'], 'file') && ...
-                    ~exist([save_names{1} '.fig'], 'file'));
+                    ~exist([save_names{1} '.fig'], 'file')) || ...
+                    (~isempty(figures_dir) && ~cfg.save_figure);
 
 if do_the_operation
     if ~running_on_grand_average
@@ -99,13 +100,16 @@ if do_the_operation
         end
         
         if isa(output_variable, 'matlab.ui.Figure') % is it a figure?
-            disp(['Saving figure ' output{output_index} ...
-                    ' for: grand averages']);
-            if size_output_variable < two_gigabyte
-                tic; savefig(output_variable, save_names{output_index});toc
-            else
-                tic; hgsave(output_variable, save_names{output_index}, ...
-                       '-v7.3'); toc
+            if cfg.save_figure
+
+                disp(['Saving figure ' output{output_index} ...
+                        ' for: grand averages']);
+                if size_output_variable < two_gigabyte
+                    tic; savefig(output_variable, save_names{output_index});toc
+                else
+                    tic; hgsave(output_variable, save_names{output_index}, ...
+                           '-v7.3'); toc
+                end
             end
         else
             % save the mat file

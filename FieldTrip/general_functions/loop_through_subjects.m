@@ -37,7 +37,8 @@ for subject_index = 1:n_subjects
     % check if file exists and whether overwriting is permitted
     do_the_operation = overwrite || isempty(output) || ...
                       (~exist([save_names{1} '.mat'], 'file') && ...
-                       ~exist([save_names{1} '.fig'], 'file'));
+                       ~exist([save_names{1} '.fig'], 'file')) || ...
+                       (~isempty(figures_dir) && ~cfg.save_figure);
     if do_the_operation
         % load input file(s) (if not empty)
         if ~isempty(input)
@@ -86,16 +87,18 @@ for subject_index = 1:n_subjects
             end
        
             if isa(output_variable, 'matlab.ui.Figure') % is it a figure?
-                disp(['Saving figure ' output{output_index} ...
-                        ' for: ' subject]);
-                if size_output_variable < two_gigabyte
-                    tic; 
-                    savefig(output_variable, save_names{output_index});
-                    toc
-                else
-                    tic;
-                    hgsave(output_variable, ...
-                            save_names{output_index}, '-v7.3'); toc
+                if cfg.save_figure
+                    disp(['Saving figure ' output{output_index} ...
+                            ' for: ' subject]);
+                    if size_output_variable < two_gigabyte
+                        tic; 
+                        savefig(output_variable, save_names{output_index});
+                        toc
+                    else
+                        tic;
+                        hgsave(output_variable, ...
+                                save_names{output_index}, '-v7.3'); toc
+                    end
                 end
             else
                 % save the mat file

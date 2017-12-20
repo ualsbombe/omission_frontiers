@@ -21,7 +21,7 @@ addpath(fullfile(script_dir, 'general_functions'));
 addpath(fullfile(script_dir, 'plot_processed_mr_functions'));
 
 %% SUBJECTS
-% these are the subjects names
+% these are the subject names
 
 subjects = {
         
@@ -48,10 +48,10 @@ subjects = {
                      
                      };
                  
-%% TEST ONLY ONE SUBJECT
+%% CHOOSE THE NUMBER OF SUBJECTS RUN
 % index subjects from 1:20 according to how many you want to run (:) all
 
-subjects = subjects(2);
+subjects = subjects(1);
                 
 %% SET PLOT DEFAULTS
 
@@ -70,6 +70,7 @@ function_name = 'plot_mri';
 
 % build configuration
 cfg = [];
+cfg.save_figure = false;
 
 % Run "loop_through_subjects" function
 loop_through_subjects(subjects, data_dir, function_name, ...
@@ -81,7 +82,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % ft_convert_units and ft_plot_mesh
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'headmodel' 'mri_realigned_digitization_points' 'mri_segmented'};
 output = {'mri/sens_headshape_mri_axes' ...
           'mri/anat_mriseg' ...
@@ -95,6 +96,7 @@ function_name = 'plot_quality_control_figures';
 
 % build configuration
 cfg = [];
+cfg.save_figure = false;
 cfg.headshape_file = 'oddball_absence-tsss-mc_meg.fif';
 
 % Run "loop_through_subjects" function
@@ -105,7 +107,7 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 % uses: ft_plot_mesh and ft_plot_vol
 
 % options for the function
-overwrite = true;
+overwrite = false;
 input = {'headmodel' 'warped_grid'};
 output = {'mri/headmodel_inside_grid';
           };
@@ -113,6 +115,7 @@ function_name = 'plot_headmodel_inside_grid';
 
 % build configuration
 cfg = [];
+cfg.save_figure = false;
 cfg.view = [222 18];
 
 % Run "loop_through_subjects" function

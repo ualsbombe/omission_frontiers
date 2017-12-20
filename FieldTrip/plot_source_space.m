@@ -20,7 +20,7 @@ addpath(fullfile(script_dir, 'general_functions'));
 addpath(fullfile(script_dir, 'plot_source_space_functions'));
 
 %% SUBJECTS
-% these are the subjects names
+% these are the subject names
 
 subjects = {
         
@@ -47,7 +47,7 @@ subjects = {
                      
                      };
                  
-%% TEST ONLY ONE SUBJECT
+%% CHOOSE THE NUMBER OF SUBJECTS RUN
 % index subjects from 1:20 according to how many you want to run (:) all
 
 subjects = subjects(1);
@@ -67,9 +67,10 @@ function_name = 'plot_tfr_epochs';
 
 % build configuration
 cfg = [];
+cfg.save_figure = false;
 cfg.select_data.channel = 'MEGGRAD';
 cfg.events = {1 2 3 13 14 15};
-cfg.xlim = [0.500 0.900];
+cfg.xlim = [0.800 1.200];
 
 % Run "loop_through_subjects" function
 loop_through_subjects(subjects, data_dir, function_name, ...
@@ -86,6 +87,7 @@ function_name = 'plot_epochs_power';
 
 % build configuration
 cfg = [];
+cfg.save_figure = false;
 cfg.events = {1 2 3 13 14 15};
 cfg.contrast_event = 21;
 
