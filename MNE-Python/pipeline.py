@@ -10,13 +10,17 @@ Pipeline for group analysis of MEG data
 # SET HOME PATH
 #%%============================================================================
 
-home_path = '/u/45/vanvlm1/unix/'
+home_path = '/home/lau/' ## change this according to needs
 
 #==============================================================================
 # IMPORTS 
 #%%============================================================================
 
 from os.path import join
+from os import chdir
+project_name = 'analyses/omission_frontiers_BIDS-MNE-Python/'
+script_path = join(home_path, project_name, 'scripts', 'python')
+chdir(script_path)
 from analysis_functions_frontiers import operations_functions as operations
 from analysis_functions_frontiers import io_functions as io
 from analysis_functions_frontiers import plot_functions as plot
@@ -25,36 +29,34 @@ from analysis_functions_frontiers import plot_functions as plot
 # PATHS 
 #%%============================================================================
 
-data_path = '/m/nbe/work/vanvlm1/frontiers2017/'
-subjects_dir = '/m/nbe/work/vanvlm1/frontiers2017/FreeSurfer/'
-project_name = 'projects/frontiers2017/'
-
+data_path = join(home_path, project_name, 'data/')
+subjects_dir = join(home_path, project_name, 'data/FreeSurfer/')
 name = 'oddball_absence'
 save_dir_averages = data_path + 'grand_averages/'
 figures_path = join(home_path, project_name, 'figures/')
 
 subjects = [
-    'sub-01',
-    'sub-02',
-    'sub-03',
-    'sub-04',
-    'sub-05',
-    'sub-06',
-    'sub-07',
-    'sub-08',
-    'sub-09',
-    'sub-10',
-    'sub-11',
-    'sub-12',
-    'sub-13',
-    'sub-14',
-    'sub-15',
-    'sub-16',
-    'sub-17',
-    'sub-18',
-    'sub-19',
-    'sub-20'
-]
+                         'sub-01',
+                         'sub-02',
+                         'sub-03',
+                         'sub-04',
+                         'sub-05',
+                         'sub-06',
+                         'sub-07',
+                         'sub-08',
+                         'sub-09',
+                         'sub-10',
+                         'sub-11',
+                         'sub-12',
+                         'sub-13',
+                         'sub-14',
+                         'sub-15',
+                         'sub-16',
+                         'sub-17',
+                         'sub-18',
+                         'sub-19',
+                         'sub-20'
+                     ]
 subjects_to_run = (None, None) ## means all subjects
 #subjects_to_run = (0, 1)# subject indices to run, if you don't want to run all
                               
@@ -63,69 +65,69 @@ subjects_to_run = (None, None) ## means all subjects
 #%%============================================================================
 operations_to_apply = dict(
 
-    ## OS commands
+                    ## OS commands
 
-    populate_data_directory=1,
-    
-    ## WITHIN SUBJECT                    
-    
-    ## sensor space operations
-    filter_raw=1,
-    find_events=1,
-    epoch_raw=1,
-    run_ica=1,
-    apply_ica=1,
-    get_evokeds=1,
-    
-    ## source space operations
-    import_mri=1,
-    segment_mri=0, # long process (>6 h)
-    apply_watershed=1,
-    make_source_space=1,
-    make_dense_scalp_surfaces=1,
-    make_bem_solutions=1,
-    create_forward_solution=1,
-    estimate_noise_covariance=1, 
-    create_inverse_operator=1,
-    source_estimate=1,
-    morph_to_fsaverage=1,
-    
-    ## BETWEEN SUBJECTS
-    
-    ## compute grand averages
-    grand_averages_evokeds=1, # sensor space                    
-    average_morphed_data=1, # source space
-    
-    ## PLOTTING                    
-    
-    ## plotting sensor space (within subject)
-    plot_maxfiltered=0,
-    plot_filtered=0,
-    plot_power_spectra=0,
-    plot_ica=0,
-    plot_epochs_image=0,
-    plot_evokeds=0,
-    plot_butterfly_evokeds=0,
-    
-    ## plotting source space (within subject)
-    plot_transformation=0,
-    plot_source_space=0,
-    plot_noise_covariance=0,
-    plot_source_estimates=0,
-    
-    ## plotting sensor space (between subjects)
-    plot_grand_averages_evokeds=0,
-    plot_grand_averages_butterfly_evokeds=0,
-    
-    ## plotting source space (between subjects)
-    plot_grand_averages_source_estimates=0,
-    
-    ## statistics in source space
-    statistics_source_space=1,
-    
-    ## plot source space with statistics mask
-    plot_grand_averages_source_estimates_cluster_masked=0
-)
+                    populate_data_directory=0,
+                    
+                    ## WITHIN SUBJECT                    
+                    
+                    ## sensor space operations
+                    filter_raw=0,
+                    find_events=0,
+                    epoch_raw=0,
+                    run_ica=0,
+                    apply_ica=0,
+                    get_evokeds=0,
+                    
+                    ## source space operations
+                    import_mri=0,
+                    segment_mri=0, # long process (>6 h)
+                    apply_watershed=0,
+                    make_source_space=0,
+                    make_dense_scalp_surfaces=0,
+                    make_bem_solutions=0,
+                    create_forward_solution=0,
+                    estimate_noise_covariance=0, 
+                    create_inverse_operator=0,
+                    source_estimate=0,
+                    morph_to_fsaverage=0,
+                    
+                    ## BETWEEN SUBJECTS
+                    
+                    ## compute grand averages
+                    grand_averages_evokeds=0, # sensor space                    
+                    average_morphed_data=0, # source space
+                    
+                    ## PLOTTING                    
+                    
+                    ## plotting sensor space (within subject)
+                    plot_maxfiltered=0,
+                    plot_filtered=0,
+                    plot_power_spectra=0,
+                    plot_ica=0,
+                    plot_epochs_image=0,
+                    plot_evokeds=0,
+                    plot_butterfly_evokeds=0,
+                    
+                    ## plotting source space (within subject)
+                    plot_transformation=0,
+                    plot_source_space=0,
+                    plot_noise_covariance=0,
+                    plot_source_estimates=0,
+                    
+                    ## plotting sensor space (between subjects)
+                    plot_grand_averages_evokeds=0,
+                    plot_grand_averages_butterfly_evokeds=0,
+                    
+                    ## plotting source space (between subjects)
+                    plot_grand_averages_source_estimates=0,
+                    
+                    ## statistics in source space
+                    statistics_source_space=0,
+                    
+                    ## plot source space with statistics mask
+                    plot_grand_averages_source_estimates_cluster_masked=0
+                )
                                   
 #==============================================================================
 # PARAMETERS                     

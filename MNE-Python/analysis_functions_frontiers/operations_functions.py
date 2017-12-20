@@ -113,7 +113,7 @@ def filter_raw(name, save_dir, lowpass, overwrite):
         raw.save(filter_path, overwrite=True)
         
     else:
-        print(('raw file: ' + filter_path + ' already exists'))
+        print('raw file: ' + filter_path + ' already exists')
     
 def find_events(name, save_dir, stim_channel, min_duration,
                 adjust_timeline_by_msec, lowpass, overwrite):
@@ -130,7 +130,7 @@ def find_events(name, save_dir, stim_channel, min_duration,
         mne.event.write_events(events_path, events)
             
     else:
-        print(('event file: '+ events_path + ' already exists'))
+        print('event file: '+ events_path + ' already exists')
           
 def epoch_raw(name, save_dir, lowpass, event_id, tmin, tmax,
               baseline, reject, bad_channels, decim, overwrite):
@@ -152,7 +152,7 @@ def epoch_raw(name, save_dir, lowpass, event_id, tmin, tmax,
         epochs.save(epochs_path)  
         
     else:
-        print(('epochs file: '+ epochs_path + ' already exists'))
+        print('epochs file: '+ epochs_path + ' already exists')
             
 def run_ica(name, save_dir, lowpass, overwrite):
     
@@ -179,7 +179,7 @@ def run_ica(name, save_dir, lowpass, overwrite):
         ica.save(ica_path)
         
     else:
-        print(('ica file: '+ ica_path + ' already exists'))
+        print('ica file: '+ ica_path + ' already exists')
 
 def apply_ica(name, save_dir, lowpass, overwrite):
     
@@ -196,7 +196,7 @@ def apply_ica(name, save_dir, lowpass, overwrite):
         ica_epochs.save(ica_epochs_path)
         
     else:
-        print(('ica epochs file: '+ ica_epochs_path + ' already exists'))
+        print('ica epochs file: '+ ica_epochs_path + ' already exists')
 
 def get_evokeds(name, save_dir, lowpass, overwrite):
     
@@ -214,7 +214,7 @@ def get_evokeds(name, save_dir, lowpass, overwrite):
         mne.evoked.write_evokeds(evokeds_path, evokeds)
         
     else:
-        print(('evokeds file: '+ evokeds_path + ' already exists'))
+        print('evokeds file: '+ evokeds_path + ' already exists')
         
 def grand_average_evokeds(evoked_data_all, save_dir_averages, lowpass):
 
@@ -261,9 +261,9 @@ def import_mri(dicom_path, subject, subjects_dir, n_jobs_freesurfer):
         
         run_process_and_write_output(command, subjects_dir)
     else:
-        print(('FreeSurfer folder for: ' + subject + ' already exists.' + \
+        print('FreeSurfer folder for: ' + subject + ' already exists.' + \
               ' To import data from the beginning, you would have to ' + \
-              "delete this subject's FreeSurfer folder"))
+              "delete this subject's FreeSurfer folder")
 
 def segment_mri(subject, subjects_dir, n_jobs_freesurfer):
     
@@ -402,7 +402,7 @@ def create_forward_solution(name, save_dir, subject, subjects_dir,
         mne.write_forward_solution(forward_path, forward, overwrite)
         
     else:
-        print(('forward solution: ' + forward_path + ' already exists'))
+        print('forward solution: ' + forward_path + ' already exists')
         
 def estimate_noise_covariance(name, save_dir, lowpass, overwrite):
     
@@ -421,8 +421,8 @@ def estimate_noise_covariance(name, save_dir, lowpass, overwrite):
         mne.cov.write_cov(covariance_path, noise_covariance)
            
     else:
-        print(('noise covariance file: '+ covariance_path + \
-                ' already exists'))          
+        print('noise covariance file: '+ covariance_path + \
+              ' already exists')          
                                                
 def create_inverse_operator(name, save_dir, lowpass, overwrite):
     
@@ -442,8 +442,8 @@ def create_inverse_operator(name, save_dir, lowpass, overwrite):
                                                     inverse_operator)
                                                     
     else:
-        print(('inverse operator file: '+ inverse_operator_path + \
-            ' already exists'))
+        print('inverse operator file: '+ inverse_operator_path + \
+              ' already exists')
                                                 
 def source_estimate(name, save_dir, lowpass, method, 
                     overwrite):
@@ -465,8 +465,8 @@ def source_estimate(name, save_dir, lowpass, method,
                                         inverse_operator, 
                                         method=method)
         else:
-            print(('source estimates for: '+  stc_path + \
-            ' already exists'))                                                                            
+            print('source estimates for: '+  stc_path + \
+                  ' already exists')
                                                      
     for stc in stcs:
         stc_name = name + filter_string(lowpass) + '_' + stc + '_' + method
@@ -494,8 +494,8 @@ def morph_data_to_fsaverage(name, save_dir, subjects_dir, subject,
                                                     subjects_dir=subjects_dir,
                                                     n_jobs=-1)
         else:
-            print(('morphed source estimates for: '+  stc_morph_path + \
-            ' already exists')) 
+            print('morphed source estimates for: '+  stc_morph_path + \
+                  ' already exists')
                                                                                                
     for trial_type in stcs_morph:
         stc_morph_name = name + filter_string(lowpass) + '_' + \
@@ -587,5 +587,5 @@ def statistics_source_space(morphed_data_all, save_dir_averages,
         print('finished saving cluster at path: ' + cluster_path)
 
     else:                                                                            
-        print(('cluster permutation: '+ cluster_path + \
-            ' already exists'))
+        print('cluster permutation: '+ cluster_path + \
+              ' already exists')
