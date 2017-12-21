@@ -241,11 +241,10 @@ def run_process_and_write_output(command, subjects_dir):
     process = subprocess.Popen(command, stdout=subprocess.PIPE,
                                env=environment)
     ## write bash output in python console
-    for c in iter(lambda: process.stdout.read(1), ''):
-             sys.stdout.write(c)
+    for c in iter(lambda: process.stdout.read(1), b''):
+        sys.stdout.write(c.decode('utf-8'))
         
 def import_mri(dicom_path, subject, subjects_dir, n_jobs_freesurfer):
-
     files = listdir(dicom_path)
     first_file = files[0]
     ## check if import has already been done
