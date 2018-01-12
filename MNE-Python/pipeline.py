@@ -25,9 +25,9 @@ from analysis_functions_frontiers import plot_functions as plot
 # PATHS 
 #%%============================================================================
 
+project_name = 'analyses/omission_frontiers_BIDS-MNE-Python/'
 data_path = join(home_path, project_name, 'data/')
 subjects_dir = join(home_path, project_name, 'data/FreeSurfer/')
-project_name = 'analyses/omission_frontiers_BIDS-MNE-Python/'
 name = 'oddball_absence'
 save_dir_averages = data_path + 'grand_averages/'
 figures_path = join(home_path, project_name, 'figures/')
