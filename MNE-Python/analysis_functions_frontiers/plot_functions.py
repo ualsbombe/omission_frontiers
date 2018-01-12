@@ -425,7 +425,7 @@ def plot_grand_averages_source_estimates_cluster_masked(name,
     t_mask[cluster_T == 0] = 0
     cutoff = stats.t.ppf(1 - p_threshold / 2, df=n_subjects - 1)
     
-    time_index = mne_evoked_time * 1e3 + 200
+    time_index = int(mne_evoked_time * 1e3 + 200)
     time_window_times = np.linspace(time_window[0], time_window[1], 
                         int((time_window[1] - time_window[0]) * 1e3) + 2)
     time_index_mask = np.where(time_window_times == mne_evoked_time)[0]
