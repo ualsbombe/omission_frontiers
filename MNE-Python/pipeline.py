@@ -107,7 +107,7 @@ operations_to_apply = dict(
                     plot_butterfly_evokeds=0,
                     
                     ## plotting source space (within subject)
-                    plot_transformation=0,
+                    plot_transformation=1,
                     plot_source_space=0,
                     plot_noise_covariance=0,
                     plot_source_estimates=0,

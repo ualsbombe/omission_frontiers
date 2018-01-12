@@ -280,8 +280,8 @@ def segment_mri(subject, subjects_dir, n_jobs_freesurfer):
 def apply_watershed(subject, subjects_dir, overwrite):
     
     print('Running Watershed algorithm for: ' + subject + \
-          ". Output is written to the bem folder" + \
-          "of the subject's FreeSurfer folder" + \
+          ". Output is written to the bem folder " + \
+          "of the subject's FreeSurfer folder.\n" + \
           'Bash output follows below.\n\n')
           
     if overwrite:
