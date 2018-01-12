@@ -17,7 +17,7 @@ To be added
 To be added
 
 ## Contributors
-Marijn van Vliet, added Python 3 support
+Marijn van Vliet, added Python 3 support  
 git: wmvanvliet
 
 ## Licence
