@@ -17,15 +17,19 @@ home_path = '/home/lau/' ## change this according to needs
 #%%============================================================================
 
 from os.path import join
-from analysis_functions_frontiers import operations_functions as operations
-from analysis_functions_frontiers import io_functions as io
-from analysis_functions_frontiers import plot_functions as plot
+from os import chdir
+project_name = 'analyses/omission_frontiers_BIDS-MNE-Python/'
+script_path = join(home_path, project_name, 'scripts', 'python', 
+                   'analysis_functions_frontiers')
+chdir(script_path)
+import operations_functions as operations
+import io_functions as io
+import plot_functions as plot
 
 #==============================================================================
 # PATHS 
 #%%============================================================================
 
-project_name = 'analyses/omission_frontiers_BIDS-MNE-Python/'
 data_path = join(home_path, project_name, 'data/')
 subjects_dir = join(home_path, project_name, 'data/FreeSurfer/')
 name = 'oddball_absence'
