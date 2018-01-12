@@ -5,12 +5,13 @@ Pipeline for group analysis of MEG data - plotting functions
 @email: lau.moller.andersen@ki.se | lau.andersen@cnru.dk
 @github: https://github.com/ualsbombe/omission_frontiers.git
 """
+from __future__ import print_function
 
 import mne
 from os.path import join
 import matplotlib.pyplot as plt
 import mayavi.mlab
-import io_functions as io
+from  . import io_functions as io
 import numpy as np
 from scipy import stats
 
@@ -43,9 +44,9 @@ def plot_power_spectra(name, save_dir, lowpass, subject, save_plots,
         save_path = join(figures_path, subject, 'power_spectra_raw', name + \
                              filter_string(lowpass) + '.jpg')
         psd_figure.savefig(save_path, dpi=600)
-        print 'figure: ' + save_path + ' has been saved'
+        print('figure: ' + save_path + ' has been saved')
     else:
-        print 'Not saving plots; set "save_plots" to "True" to save'            
+        print('Not saving plots; set "save_plots" to "True" to save')            
     
     
 def plot_ica(name, save_dir, lowpass, subject, save_plots, figures_path):
@@ -57,9 +58,9 @@ def plot_ica(name, save_dir, lowpass, subject, save_plots, figures_path):
         save_path = join(figures_path, subject, 'ica', name + \
             filter_string(lowpass) + '.jpg')
         ica_figure.savefig(save_path, dpi=600)
-        print 'figure: ' + save_path + ' has been saved'
+        print('figure: ' + save_path + ' has been saved')
     else:
-        print 'Not saving plots; set "save_plots" to "True" to save'            
+        print('Not saving plots; set "save_plots" to "True" to save')            
 
 
 def plot_epochs_image(name, save_dir, lowpass, subject, save_plots,
@@ -77,9 +78,9 @@ def plot_epochs_image(name, save_dir, lowpass, subject, save_plots,
                              trial_type + '_' + channel + '_' + name + \
                              filter_string(lowpass) + '.jpg')          
             epochs_image[0].savefig(save_path, dpi=600)
-            print 'figure: ' + save_path + ' has been saved'
+            print('figure: ' + save_path + ' has been saved')
         else:
-            print 'Not saving plots; set "save_plots" to "True" to save'            
+            print('Not saving plots; set "save_plots" to "True" to save')            
 
     
 def plot_evokeds(name, save_dir, lowpass, subject, save_plots, figures_path):
@@ -127,9 +128,9 @@ def plot_evokeds(name, save_dir, lowpass, subject, save_plots, figures_path):
                              figure.comment + name + \
                              filter_string(lowpass) + '.jpg')
             figure.savefig(save_path, dpi=600)
-            print 'figure: ' + save_path + ' has been saved'
+            print('figure: ' + save_path + ' has been saved')
     else:
-        print 'Not saving plots; set "save_plots" to "True" to save'
+        print('Not saving plots; set "save_plots" to "True" to save')
         
         
         
@@ -145,9 +146,9 @@ def plot_butterfly_evokeds(name, save_dir, lowpass, subject, save_plots,
                              'butterfly_' + evoked.comment + '_' + name + \
                              filter_string(lowpass) + '.jpg')
             figure.savefig(save_path, dpi=600)
-            print 'figure: ' + save_path + ' has been saved'
+            print('figure: ' + save_path + ' has been saved')
         else:
-            print 'Not saving plots; set "save_plots" to "True" to save'        
+            print('Not saving plots; set "save_plots" to "True" to save')        
         
 def plot_transformation(name, save_dir, subject, subjects_dir, save_plots,
                         figures_path):
@@ -165,9 +166,9 @@ def plot_transformation(name, save_dir, subject, subjects_dir, save_plots,
             save_path = join(figures_path, subject, 'transformation', name + \
                             '.jpg')
             mayavi.mlab.savefig(save_path)
-            print 'figure: ' + save_path + ' has been saved'
+            print('figure: ' + save_path + ' has been saved')
         else:
-            print 'Not saving plots; set "save_plots" to "True" to save'
+            print('Not saving plots; set "save_plots" to "True" to save')
                            
 def plot_source_space(name, subject, subjects_dir, save_plots, figures_path):
     
@@ -178,10 +179,10 @@ def plot_source_space(name, subject, subjects_dir, save_plots, figures_path):
     if save_plots:
         save_path = join(figures_path, subject, 'source_space', name + '.jpg')
         mayavi.mlab.savefig(save_path)
-        print 'figure: ' + save_path + ' has been saved'
+        print('figure: ' + save_path + ' has been saved')
 
     else:
-            print 'Not saving plots; set "save_plots" to "True" to save'
+            print('Not saving plots; set "save_plots" to "True" to save')
             
 def plot_noise_covariance(name, save_dir, lowpass, subject, save_plots,
                           figures_path):
@@ -195,9 +196,9 @@ def plot_noise_covariance(name, save_dir, lowpass, subject, save_plots,
         save_path = join(figures_path, subject, 'noise_covariance', name + \
                     filter_string(lowpass) + '.jpg')
         fig_cov[0].savefig(save_path, dpi=600)
-        print 'figure: ' + save_path + ' has been saved'
+        print('figure: ' + save_path + ' has been saved')
     else:
-        print 'Not saving plots; set "save_plots" to "True" to save'        
+        print('Not saving plots; set "save_plots" to "True" to save')        
     
 
 def plot_source_estimates(name, save_dir, lowpass, subject,
@@ -207,7 +208,7 @@ def plot_source_estimates(name, save_dir, lowpass, subject,
     stcs = io.read_source_estimates(name, save_dir, lowpass, method)
     
     brains = dict()
-    for trial_type in stcs.keys():
+    for trial_type in list(stcs.keys()):
         brains[trial_type] = None
       
     mayavi.mlab.close(None, True)
@@ -222,7 +223,7 @@ def plot_source_estimates(name, save_dir, lowpass, subject,
                                     views='dorsal')
         time = mne_evoked_time
         brains[stc].set_time(time)
-        message = stcs.keys()[brains_figure_counter] 
+        message = list(stcs.keys())[brains_figure_counter] 
         brains[stc].add_text(0.01, 0.9, message,
                  str(brains_figure_counter), font_size=14)
                  
@@ -232,10 +233,10 @@ def plot_source_estimates(name, save_dir, lowpass, subject,
                              filter_string(lowpass) + '_' + str(time * 1e3) + \
                                  '_msec.jpg')                     
             brains[stc].save_single_image(save_path)
-            print 'figure: ' + save_path + ' has been saved'
+            print('figure: ' + save_path + ' has been saved')
             
         else:
-            print 'Not saving plots; set "save_plots" to "True" to save'             
+            print('Not saving plots; set "save_plots" to "True" to save')             
         
 def plot_grand_average_evokeds(name, lowpass, save_dir_averages,
                                evoked_data_all,
@@ -293,9 +294,9 @@ def plot_grand_average_evokeds(name, lowpass, save_dir_averages,
                              figure.comment + name + \
                              filter_string(lowpass) + '.jpg')
             figure.savefig(save_path, dpi=600)
-            print 'figure: ' + save_path + ' has been saved'
+            print('figure: ' + save_path + ' has been saved')
     else:
-        print 'Not saving plots; set "save_plots" to "True" to save'
+        print('Not saving plots; set "save_plots" to "True" to save')
         
         
 def plot_grand_averages_butterfly_evokeds(name, lowpass, save_dir_averages,
@@ -323,9 +324,9 @@ def plot_grand_averages_butterfly_evokeds(name, lowpass, save_dir_averages,
                              'butterfly_' + grand_average.comment + '_' + name + \
                              filter_string(lowpass) + '.jpg')
             figure.savefig(save_path, dpi=600)
-            print 'figure: ' + save_path + ' has been saved'
+            print('figure: ' + save_path + ' has been saved')
         else:
-            print 'Not saving plots; set "save_plots" to "True" to save' 
+            print('Not saving plots; set "save_plots" to "True" to save') 
 
 def plot_grand_averages_source_estimates(name, save_dir_averages, lowpass,
                           subjects_dir, method, mne_evoked_time,
@@ -346,7 +347,7 @@ def plot_grand_averages_source_estimates(name, save_dir_averages, lowpass,
         stcs[stc_type] = stc
           
     brains = dict()
-    for trial_type in stcs.keys():
+    for trial_type in list(stcs.keys()):
         brains[trial_type] = None
       
     mayavi.mlab.close(None, True)
@@ -361,7 +362,7 @@ def plot_grand_averages_source_estimates(name, save_dir_averages, lowpass,
                                     views='dorsal')
         time = mne_evoked_time
         brains[stc].set_time(time)
-        message = stcs.keys()[brains_figure_counter] 
+        message = list(stcs.keys())[brains_figure_counter] 
         brains[stc].add_text(0.01, 0.9, message,
                  str(brains_figure_counter), font_size=14)
                  
@@ -371,10 +372,10 @@ def plot_grand_averages_source_estimates(name, save_dir_averages, lowpass,
                              filter_string(lowpass) + '_' + str(time * 1e3) + \
                                  '_msec.jpg')                     
             brains[stc].save_single_image(save_path)
-            print 'figure: ' + save_path + ' has been saved'
+            print('figure: ' + save_path + ' has been saved')
             
         else:
-            print 'Not saving plots; set "save_plots" to "True" to save'
+            print('Not saving plots; set "save_plots" to "True" to save')
             
 def plot_grand_averages_source_estimates_cluster_masked(name, 
                           save_dir_averages, lowpass,
@@ -424,7 +425,7 @@ def plot_grand_averages_source_estimates_cluster_masked(name,
     t_mask[cluster_T == 0] = 0
     cutoff = stats.t.ppf(1 - p_threshold / 2, df=n_subjects - 1)
     
-    time_index = mne_evoked_time * 1e3 + 200
+    time_index = int(mne_evoked_time * 1e3 + 200)
     time_window_times = np.linspace(time_window[0], time_window[1], 
                         int((time_window[1] - time_window[0]) * 1e3) + 2)
     time_index_mask = np.where(time_window_times == mne_evoked_time)[0]
@@ -454,7 +455,7 @@ def plot_grand_averages_source_estimates_cluster_masked(name,
                             filter_string(lowpass) + '.jpg' + '_' + str(time * 1e3) + \
                                 '_msec.jpg')                     
         brain.save_single_image(save_path)
-        print 'figure: ' + save_path + ' has been saved'
+        print('figure: ' + save_path + ' has been saved')
         
     else:
-        print 'Not saving plots; set "save_plots" to "True" to save'
+        print('Not saving plots; set "save_plots" to "True" to save')

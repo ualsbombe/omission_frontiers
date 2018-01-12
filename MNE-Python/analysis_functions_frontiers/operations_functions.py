@@ -5,6 +5,7 @@ Pipeline for group analysis of MEG data - operations functions
 @email: lau.moller.andersen@ki.se | lau.andersen@cnru.dk
 @github: https://github.com/ualsbombe/omission_frontiers.git
 """
+from __future__ import print_function
 
 import mne
 import numpy as np
@@ -12,7 +13,7 @@ from os.path import join, isfile, isdir
 from scipy import stats
 from os import makedirs, listdir, environ
 import sys
-import io_functions as io
+from . import io_functions as io
 import pickle
 import subprocess
 
@@ -40,8 +41,8 @@ def populate_data_directory(home_path, project_name, data_path, figures_path,
         try:
             makedirs(full_path_MEG)
             makedirs(full_path_MRI)
-            print full_path_MEG + ' has been created'
-            print full_path_MRI + ' has been created'
+            print(full_path_MEG + ' has been created')
+            print(full_path_MRI + ' has been created')
         except OSError as exc:
             if exc.errno == 17: ## dir already exists
                 pass
@@ -51,7 +52,7 @@ def populate_data_directory(home_path, project_name, data_path, figures_path,
                               'grand_averages/statistics')
     try:
         makedirs(grand_average_path)         
-        print grand_average_path + ' has been created'
+        print(grand_average_path + ' has been created')
     except OSError as exc:
         if exc.errno == 17: ## dir already exists
             pass         
@@ -67,7 +68,7 @@ def populate_data_directory(home_path, project_name, data_path, figures_path,
             ## create figure paths
             try:
                 makedirs(full_path_figures)
-                print full_path_figures + ' has been created'
+                print(full_path_figures + ' has been created')
             except OSError as exc:
                 if exc.errno == 17: ## dir already exists
                     pass
@@ -80,7 +81,7 @@ def populate_data_directory(home_path, project_name, data_path, figures_path,
         try:
             full_path = join(grand_averages_figures_path, figure_subfolder)
             makedirs(full_path)
-            print full_path + ' has been created'
+            print(full_path + ' has been created')
         except OSError as exc:
             if exc.errno == 17: ## dir already exists
                 pass
@@ -89,7 +90,7 @@ def populate_data_directory(home_path, project_name, data_path, figures_path,
     freesurfer_path = join(home_path, project_name, subjects_dir)
     try:
         makedirs(freesurfer_path)
-        print freesurfer_path + ' has been created'
+        print(freesurfer_path + ' has been created')
     except OSError as exc:
         if exc.errno == 17: ## dir already exists
             pass
@@ -240,18 +241,17 @@ def run_process_and_write_output(command, subjects_dir):
     process = subprocess.Popen(command, stdout=subprocess.PIPE,
                                env=environment)
     ## write bash output in python console
-    for c in iter(lambda: process.stdout.read(1), ''):
-             sys.stdout.write(c)
+    for c in iter(lambda: process.stdout.read(1), b''):
+        sys.stdout.write(c.decode('utf-8'))
         
 def import_mri(dicom_path, subject, subjects_dir, n_jobs_freesurfer):
-
     files = listdir(dicom_path)
     first_file = files[0]
     ## check if import has already been done
     if not isdir(join(subjects_dir, subject)):
         ## run bash command
-        print 'Importing MRI data for subject: ' + subject + \
-              ' into FreeSurfer folder.\nBash output follows below.\n\n'
+        print('Importing MRI data for subject: ' + subject + \
+              ' into FreeSurfer folder.\nBash output follows below.\n\n')
               
         command = ['recon-all',
                    '-subjid', subject,
@@ -266,9 +266,9 @@ def import_mri(dicom_path, subject, subjects_dir, n_jobs_freesurfer):
 
 def segment_mri(subject, subjects_dir, n_jobs_freesurfer):
     
-    print 'Segmenting MRI data for subject: ' + subject + \
+    print('Segmenting MRI data for subject: ' + subject + \
           ' using the Freesurfer "recon-all" pipeline.' + \
-          'Bash output follows below.\n\n'
+          'Bash output follows below.\n\n')
           
     command = ['recon-all',
                '-subjid', subject,
@@ -279,10 +279,10 @@ def segment_mri(subject, subjects_dir, n_jobs_freesurfer):
 
 def apply_watershed(subject, subjects_dir, overwrite):
     
-    print 'Running Watershed algorithm for: ' + subject + \
+    print('Running Watershed algorithm for: ' + subject + \
           ". Output is written to the bem folder" + \
           "of the subject's FreeSurfer folder" + \
-          'Bash output follows below.\n\n'
+          'Bash output follows below.\n\n')
           
     if overwrite:
         overwrite_string = '--overwrite'
@@ -321,11 +321,11 @@ def apply_watershed(subject, subjects_dir, overwrite):
 
 def make_source_space(subject, subjects_dir, source_space_method, overwrite):
       
-    print 'Making source space for ' + \
+    print('Making source space for ' + \
           'subject: ' + subject + \
           ". Output is written to the bem folder" + \
           " of the subject's FreeSurfer folder.\n" + \
-          'Bash output follows below.\n\n'
+          'Bash output follows below.\n\n')
           
     if overwrite:
         overwrite_string = '--overwrite'
@@ -342,11 +342,11 @@ def make_source_space(subject, subjects_dir, source_space_method, overwrite):
     
 def make_dense_scalp_surfaces(subject, subjects_dir, overwrite):
     
-    print 'Making dense scalp surfacing easing co-registration for ' + \
+    print('Making dense scalp surfacing easing co-registration for ' + \
           'subject: ' + subject + \
           ". Output is written to the bem folder" + \
           " of the subject's FreeSurfer folder.\n" + \
-          'Bash output follows below.\n\n'
+          'Bash output follows below.\n\n')
           
     if overwrite:
         overwrite_string = '--overwrite'
@@ -361,11 +361,11 @@ def make_dense_scalp_surfaces(subject, subjects_dir, overwrite):
           
 def make_bem_solutions(subject, subjects_dir):
        
-    print 'Writing volume conductor for ' + \
+    print('Writing volume conductor for ' + \
           'subject: ' + subject + \
           ". Output is written to the bem folder" + \
           " of the subject's FreeSurfer folder.\n" + \
-          'Bash output follows below.\n\n'
+          'Bash output follows below.\n\n')
           
     command = ['mne_setup_forward_model',
                '--subject', subject,
@@ -421,7 +421,7 @@ def estimate_noise_covariance(name, save_dir, lowpass, overwrite):
            
     else:
         print('noise covariance file: '+ covariance_path + \
-                ' already exists')          
+              ' already exists')          
                                                
 def create_inverse_operator(name, save_dir, lowpass, overwrite):
     
@@ -442,7 +442,7 @@ def create_inverse_operator(name, save_dir, lowpass, overwrite):
                                                     
     else:
         print('inverse operator file: '+ inverse_operator_path + \
-            ' already exists')
+              ' already exists')
                                                 
 def source_estimate(name, save_dir, lowpass, method, 
                     overwrite):
@@ -465,7 +465,7 @@ def source_estimate(name, save_dir, lowpass, method,
                                         method=method)
         else:
             print('source estimates for: '+  stc_path + \
-            ' already exists')                                                                            
+                  ' already exists')
                                                      
     for stc in stcs:
         stc_name = name + filter_string(lowpass) + '_' + stc + '_' + method
@@ -494,7 +494,7 @@ def morph_data_to_fsaverage(name, save_dir, subjects_dir, subject,
                                                     n_jobs=-1)
         else:
             print('morphed source estimates for: '+  stc_morph_path + \
-            ' already exists') 
+                  ' already exists')
                                                                                                
     for trial_type in stcs_morph:
         stc_morph_name = name + filter_string(lowpass) + '_' + \
@@ -553,7 +553,7 @@ def statistics_source_space(morphed_data_all, save_dir_averages,
         for subject_index in range(n_subjects):
             statistics_data_1[subject_index, :, :] = input_data['iv_1'][subject_index].data
             statistics_data_2[subject_index, :, :] = input_data['iv_2'][subject_index].data
-            print 'processing data from subject: ' + str(subject_index)
+            print('processing data from subject: ' + str(subject_index))
             
         ## crop data on the time dimension
         times = info_data[0].times
@@ -583,8 +583,8 @@ def statistics_source_space(morphed_data_all, save_dir_averages,
         with open(cluster_path, 'wb') as filename:
             pickle.dump(cluster_dict, filename)
 
-        print 'finished saving cluster at path: ' + cluster_path
+        print('finished saving cluster at path: ' + cluster_path)
 
     else:                                                                            
         print('cluster permutation: '+ cluster_path + \
-            ' already exists')
+              ' already exists')
