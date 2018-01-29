@@ -1,5 +1,10 @@
 # Omission Frontiers
 
+## Reference
+If you use the data or the analysis pipeline, please refer to:  
+Andersen, L.M., 2018. Group Analysis in MNE-Python of Evoked Responses from a Tactile Stimulation Paradigm: A Pipeline for Reproducibility at Every Step of Processing, Going from Individual Sensor Space Representations to an across-Group Source Space Representation. Front. Neurosci. 12. https://doi.org/10.3389/fnins.2018.00006
+
+
 ## Synopsis
 This project is intended for facilitating group-level analysis in magnetoencephalography (MEG) using the open toolboxes MNE-Python and FieldTrip. The code is accompanied by an article for each of the toolboxes in an upcoming Frontiers Special Issue.  
 Intended to be compatible with both Python 2.7 and Python 3.x, but hasn't been extensively tested for Python 3.  
