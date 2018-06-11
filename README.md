@@ -7,12 +7,13 @@ Andersen, L.M., 2018. Group Analysis in MNE-Python of Evoked Responses from a Ta
 
 ## Synopsis
 This project is intended for facilitating group-level analysis in magnetoencephalography (MEG) using the open toolboxes MNE-Python and FieldTrip. The code is accompanied by an article for each of the toolboxes in an upcoming Frontiers Special Issue.  
-Intended to be compatible with both Python 2.7 and Python 3.x, but hasn't been extensively tested for Python 3.  
+Intended to be compatible with both Python 2.7 and Python 3.x, but hasn't been extensively tested for Python 3. Testing was done with 0.15 of MNE-Python 
   
-For instructions and context of the code please refer to the article (in print) called: Group analysis in MNE-Python of evoked responses from a tactile stimulation paradigm: a pipeline for reproducibility at every step of processing, going from individual sensor space representations to an across-group source space representation  
-The reserved DOI is: 10.3389/fnins.2018.00006
+For instructions and context of the code please refer to the article called: Group analysis in MNE-Python of evoked responses from a tactile stimulation paradigm: a pipeline for reproducibility at every step of processing, going from individual sensor space representations to an across-group source space representation  
+The DOI is: DOI:10.3389/fnins.2018.00006
   
-An article is under review for the FieldTrip pipeline
+A similar article for the FieldTrip pipeline is called: Group Analysis in FieldTrip of Time-Frequency Responses: A Pipeline for Reproducibility at Every Step of Processing, Going From Individual Sensor Space Representations to an Across-Group Source Space Representation
+The DOI is: DOI:10.3389/fnins.2018.00261
 
 ## Motivation
 Most tutorials on MEG analysis are at the single-subject level. This is an attempt at remedying that situation by providing a comphehensive collection of functions that can all be accessed from a single pipeline script (MNE-Python) or several pipeline scripts (FieldTrip)
