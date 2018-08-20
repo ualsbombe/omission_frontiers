@@ -3,6 +3,9 @@
 ## Reference
 If you use the data or the analysis pipeline, please refer to:  
 Andersen, L.M., 2018. Group Analysis in MNE-Python of Evoked Responses from a Tactile Stimulation Paradigm: A Pipeline for Reproducibility at Every Step of Processing, Going from Individual Sensor Space Representations to an across-Group Source Space Representation. Front. Neurosci. 12. https://doi.org/10.3389/fnins.2018.00006
+or to:
+Andersen, L. M. Group Analysis in FieldTrip of Time-Frequency Responses: A Pipeline for Reproducibility at Every Step of Processing, Going From Individual Sensor Space Representations to an Across-Group Source Space Representation. Front. Neurosci. 12, (2018).
+https://10.3389/fnins.2018.00261
 
 
 ## Synopsis
