@@ -47,7 +47,10 @@ def read_maxfiltered(name, save_dir):
             raw_part = mne.io.Raw(raw_path, preload=True)
             raws.append(raw_part)
             split_string_number += 1
-        except:
+        except BaseException as error:
+            print('Error message found: ')
+            print(error)
+            print('\n\n')
             read_all_files = True
             print(str(split_string_number) + ' raw files were read') 
         
