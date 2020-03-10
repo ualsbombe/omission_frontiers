@@ -24,12 +24,6 @@ Most tutorials on MEG analysis are at the single-subject level. This is an attem
 ## Installation
 No installation is required. Simply download the scripts and get the data at the following DOI:10.5281/zenodo.998518 or URL:https://zenodo.org/record/998518
 
-## API Reference
-To be added
-
-## Tests
-To be added
-
 ## Contributors
 Marijn van Vliet, added Python 3 support  
 git: [wmvanvliet](https://github.com/wmvanvliet)
