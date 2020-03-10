@@ -32,7 +32,7 @@ To be added
 
 ## Contributors
 Marijn van Vliet, added Python 3 support  
-git: wmvanvliet
+git: [wmvanvliet](https://github.com/wmvanvliet)
 
 ## Licence
 CC BY 4.0
