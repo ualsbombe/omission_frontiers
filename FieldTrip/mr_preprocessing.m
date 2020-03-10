@@ -162,7 +162,12 @@ loop_through_subjects(subjects, data_dir, function_name, ...
 
 % options for the functions
 overwrite = false;
-input = {'mri_realigned_digitization_points'};
+% Note that the input below ("mri_realigned_digitization_points") 
+% was changed to ("mri_segmented") in v1.1 (github) due to the realization 
+% that "mri_realigned_digitization_points" wasn't included in the Zenodo
+% repository
+% input = {'mri_realigned_digitization_points'};
+input = {'mri_segmented'};
 output = {'warped_grid'};
 function_name = 'make_warped_grid';
 
